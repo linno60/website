@@ -13,7 +13,7 @@
         <?php if ('local' === ENV) : ?>
             <link rel="stylesheet" href="//timacdonald.dev/wp-content/themes/theme/assets/theme.css">
         <?php else : ?>
-            <link rel="stylesheet" href="//cdn.timacdonald.me/website/theme.css?v=1">
+            <link rel="stylesheet" href="//cdn.timacdonald.me/website/theme.css?v=2">
         <?php endif ?>
     </head>
     <body>

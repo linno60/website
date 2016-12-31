@@ -1,0 +1,295 @@
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */button,hr,input{overflow:visible}audio,canvas,progress,video{display:inline-block}progress,sub,sup{vertical-align:baseline}html{font-family:sans-serif;line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0} menu,article,aside,details,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}a:active,a:hover{outline-width:0}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{}button,select{text-transform:none}[type=submit], [type=reset],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:ButtonText dotted 1px}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}[hidden],template{display:none}
+/*! HTML5 Boilerplate v5.3.0 | MIT License | https://html5boilerplate.com/ */
+
+html {
+    color: #333;
+    font-size: 20px;
+    line-height: 1.4;
+    background: #fafafa;
+    font-weight: 300;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/** Theme **/
+
+strong,
+b {
+	font-weight: 900;
+}
+
+html {
+	box-sizing: border-box;
+	font-weight: 300;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+.menu-main-menu-container ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.menu-main-menu-container li {
+	display: inline-block;
+	margin: 0 0.25rem;	
+}
+
+.menu-main-menu-container a {
+	font-weight: normal;
+	color: #bbb;
+}
+
+a {
+	
+	text-decoration: none;
+	font-weight: normal;
+	color: #000;
+}
+
+a:hover,
+.menu-main-menu-container .current-menu-item a {
+	color: #4342a0;
+}
+
+h1,
+h1 a,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	line-height: 1.2;
+}
+
+h1 a,
+h2 a {
+	font-weight: bold;
+}
+
+article p {
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
+
+article {
+	margin-bottom: 4rem;
+}
+
+.list article p {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.width-container {
+	width: 750px;
+	max-width: 100%;
+	padding: 4rem 1rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.article-header {
+	margin: 0 0 2rem;
+}
+
+.list .article-header {
+	margin: 0 0 1rem;
+}
+
+blockquote {
+	border-left: 0.25rem solid #eee;
+	padding: 1rem 0 1rem 1.5rem;
+	margin: 0;
+	font-family: georgia, serif;
+	font-style: italic;
+	background: -moz-linear-gradient(left, #ffffff 0%, #fafafa 100%);
+	background: -webkit-linear-gradient(left, #ffffff 0%,#fafafa 100%);
+	background: linear-gradient(to right, #ffffff 0%,#fafafa 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fafafa',GradientType=1 );
+}
+
+blockquote p {
+	margin: 0;
+}
+
+footer {
+	text-align: center;
+	margin-top: 4rem;
+}
+
+.tldr {
+	background: #fff;
+	padding: 1rem 1.5rem;
+	border: 1px solid #eee;
+	border-bottom-width: 0.25rem;
+	border-radius: 3px;
+}
+
+.profile {
+	text-align: center;
+	margin-bottom: 4rem;
+}
+
+.profile h1 {
+	margin-bottom: 0.25rem;
+}
+
+.profile .simple-title {
+	margin-left: 1rem;
+}
+
+.profile img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 50%;
+}
+
+/** Helpers **/
+
+.hidden {
+    display: none !important;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/** Media Queries **/
+
+@media only screen and (min-width: 35em) {
+
+}
+
+@media print {
+    *,
+    *:before,
+    *:after,
+    *:first-letter,
+    *:first-line {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after,
+    a.dont-print-url:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+    
+    .dont-print {
+    	display: none! important;
+    }
+}

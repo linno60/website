@@ -11,4 +11,6 @@ if ($githubSignature !== $realSignature) {
     exit;
 }
 
-var_dump(shell_exec('git pull'));
+exec('git pull', $result);
+
+var_dump($result);

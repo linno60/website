@@ -186,6 +186,17 @@ footer {
 	border-radius: 50%;
 }
 
+.inline-code {
+    display:inline-block;
+    background: #fff;
+    border-radius: 3px;
+    padding: 0 0.33rem;
+    border: 1px solid #eee;
+    font-size: 1rem;
+    border-bottom-width: 3px;
+}
+
+
 /** Helpers **/
 
 .hidden {

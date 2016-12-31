@@ -55,41 +55,10 @@ function php_shortcode($atts, $content = null)
 
 add_shortcode('php', 'php_shortcode');
 
-// add_filter( 'the_content', 'tgm_io_shortcode_empty_paragraph_fix' );
-/**
- * Filters the content to remove any extra paragraph or break tags
- * caused by shortcodes.
- *
- * @since 1.0.0
- *
- * @param string $content  String of HTML content.
- * @return string $content Amended string of HTML content.
- */
-// function tgm_io_shortcode_empty_paragraph_fix( $content ) {
+// Register shortcodes
+function code_shortcode($atts, $content = null)
+{
+    return '<code class="inline-code">'.$content.'</code>';
+}
 
-//     $array = array(
-//         '<p>['    => '[',
-//         ']</p>'   => ']',
-//         ']<br />' => ']'
-//     );
-//     return strtr( $content, $array );
-
-// }
-
-// function remove_auto_p_in_shortcode_formatter($content) {
-//     $new_content = '';
-//     $pattern_full = '{(\[php\].*?\[/php\])}is';
-//     $pattern_contents = '{\[php\](.*?)\[/php\]}is';
-//     $pieces = preg_split($pattern_full, $content, -1, PREG_SPLIT_DELIM_CAPTURE);
-
-//     foreach ($pieces as $piece) {
-//         if (preg_match($pattern_contents, $piece, $matches)) {
-//             $new_content .= $matches[1];
-//         } else {
-//             $new_content .= wptexturize(wpautop($piece));
-//         }
-//     }
-//     return $new_content;
-// }
-
-// add_filter('the_content', 'remove_auto_p_in_shortcode_formatter', 99);
+add_shortcode('code', 'code_shortcode');

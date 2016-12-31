@@ -14,6 +14,7 @@
         </article>
     <?php endwhile; ?>
 <?php endif; ?>
+
 <div class="profile">
 	<p>
 		<a class="dont-print-url" href="//timacdonald.me">

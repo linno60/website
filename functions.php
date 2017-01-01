@@ -66,7 +66,6 @@ add_action('after_setup_theme', 'themeFeatures');
 function php_shortcode($attributes, $content = '')
 {
     return '<pre><code class="language-php">&lt;?php
-
 '.strip_tags($content).'</code></pre>';
 }
 

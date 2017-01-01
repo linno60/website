@@ -8,7 +8,7 @@
         <?php if ('local' === ENV) : ?>
             <script src="//timacdonald.dev/wp-content/themes/theme/assets/theme.js"></script>
         <?php else : ?>
-            <script src="//cdn.timacdonald.me/website/theme.js?v=2"></script>
+            <script src="//cdn.timacdonald.me/website/theme.js?v=3"></script>
         <?php endif ?>
         <script>
         	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

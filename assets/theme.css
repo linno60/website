@@ -11,12 +11,12 @@ html {
 }
 
 ::-moz-selection {
-    background: #4342a0;
+    background: #acaae2;
     text-shadow: none;
 }
 
 ::selection {
-    background: #4342a0;
+    background: #acaae2;
     text-shadow: none;
 }
 

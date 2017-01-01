@@ -80,7 +80,7 @@ add_shortcode('php', 'php_shortcode');
  */
 function php_output_shortcode($attributes, $content = '')
 {
-    return '<pre class="code-segement"><samp class="code-block code-output language-php">'.trim(strip_tags($content)).'</samp></pre>';
+    return '<div class="code-output-title">OUTPUT</div><pre class="code-segement"><samp class="code-block code-output language-php">'.trim(strip_tags($content)).'</samp></pre>';
 }
 
 add_shortcode('php_output', 'php_output_shortcode');

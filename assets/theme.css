@@ -274,12 +274,20 @@ footer {
     border-radius: 0 0 3px 3px;
     background: #444;
     color: white;
-    border-color: #393939;
+    border-color: #363636;
     border-top: 0;
 }
 
-.code-segement + .code-segement {
+.code-segement + .code-output-title {
     margin-top: -2.2rem;
+    margin-bottom: -2rem;
+    background: #555;
+    padding: 0.75rem 1.5rem;
+    color: #fff;
+    font-family: monospace;
+    font-weight: normal;
+    border-left: 1px solid #464646;
+    border-right: 1px solid #464646;
 }
 
 /* Atom One Light by Daniel Gamage | Original One Light Syntax theme from https://github.com/atom/one-light-syntax */

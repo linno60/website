@@ -140,7 +140,6 @@ blockquote {
 	background: -moz-linear-gradient(left, #ffffff 0%, #fafafa 100%);
 	background: -webkit-linear-gradient(left, #ffffff 0%,#fafafa 100%);
 	background: linear-gradient(to right, #ffffff 0%,#fafafa 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fafafa',GradientType=1 );
 }
 
 blockquote p {

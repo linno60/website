@@ -256,8 +256,6 @@ footer {
     }
 }
 
-/* Atom One Light by Daniel Gamage | Original One Light Syntax theme from https://github.com/atom/one-light-syntax */
-
 .code-block {
     display: block;
     overflow-x: auto;
@@ -272,4 +270,170 @@ footer {
     line-height: 2;
 }
 
-.hljs-comment,.hljs-quote{color:#a0a1a7;font-style:italic}.hljs-doctag,.hljs-keyword,.hljs-formula{color:#a626a4}.hljs-section,.hljs-name,.hljs-selector-tag,.hljs-deletion,.hljs-subst{color:#e45649}.hljs-literal{color:#0184bb}.hljs-string,.hljs-regexp,.hljs-addition,.hljs-attribute,.hljs-meta-string{color:#50a14f}.hljs-built_in,.hljs-class .hljs-title{color:#c18401}.hljs-attr,.hljs-variable,.hljs-template-variable,.hljs-type,.hljs-selector-class,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-number{color:#986801}.hljs-symbol,.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-title{color:#4078f2}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}.hljs-link{text-decoration:underline}
+.code-output {
+    border-radius: 0 0 3px 3px;
+    background: #444;
+    color: white;
+    border-color: #393939;
+    border-top: 0;
+}
+
+.code-segement + .code-segement {
+    margin-top: -2.2rem;
+}
+
+/* Atom One Light by Daniel Gamage | Original One Light Syntax theme from https://github.com/atom/one-light-syntax */
+
+.hljs-comment,
+.hljs-quote {
+  color: #a0a1a7;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #a626a4;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e45649;
+}
+
+.hljs-literal {
+  color: #0184bb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #50a14f;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #c18401;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #986801;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #4078f2;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}
+
+/*! Agate by Taufik Nurrohman <https://github.com/tovic> */
+
+.code-output .hljs-name,
+.code-output .hljs-strong {
+  font-weight: bold;
+}
+
+.code-output .hljs-code,
+.code-output .hljs-emphasis {
+  font-style: italic;
+}
+
+.code-output .hljs-tag {
+  color: #62c8f3;
+}
+
+.code-output .hljs-variable,
+.code-output .hljs-template-variable,
+.code-output .hljs-selector-id,
+.code-output .hljs-selector-class {
+  color: #ade5fc;
+}
+
+.code-output .hljs-string,
+.code-output .hljs-bullet {
+  color: #a2fca2;
+}
+
+.code-output .hljs-type,
+.code-output .hljs-title,
+.code-output .hljs-section,
+.code-output .hljs-attribute,
+.code-output .hljs-quote,
+.code-output .hljs-built_in,
+.code-output .hljs-builtin-name {
+  color: #ffa;
+}
+
+.code-output .hljs-number,
+.code-output .hljs-symbol,
+.code-output .hljs-bullet {
+  color: #d36363;
+}
+
+.code-output .hljs-keyword,
+.code-output .hljs-selector-tag,
+.code-output .hljs-literal {
+  color: #fcc28c;
+}
+
+.code-output .hljs-comment,
+.code-output .hljs-deletion,
+.code-output .hljs-code {
+  color: #888;
+}
+
+.code-output .hljs-regexp,
+.code-output .hljs-link {
+  color: #c6b4f0;
+}
+
+.code-output .hljs-meta {
+  color: #fc9b9b;
+}
+
+.code-output .hljs-deletion {
+  background-color: #fc9b9b;
+  color: #333;
+}
+
+.code-output .hljs-addition {
+  background-color: #a2fca2;
+  color: #333;
+}
+
+.code-output .hljs a {
+  color: inherit;
+}
+
+.code-output .hljs a:focus,
+.code-output .hljs a:hover {
+  color: inherit;
+  text-decoration: underline;
+}

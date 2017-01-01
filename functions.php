@@ -65,8 +65,8 @@ add_action('after_setup_theme', 'theme_features');
  */
 function php_shortcode($attributes, $content = '')
 {
-    return '<pre><code class="code-block language-php">&lt;?php
-'.strip_tags($content).'</code></pre>';
+    return '<pre class="code-segement"><code class="code-block language-php">&lt;?php
+'.trim(strip_tags($content)).'</code></pre>';
 }
 
 add_shortcode('php', 'php_shortcode');
@@ -80,7 +80,7 @@ add_shortcode('php', 'php_shortcode');
  */
 function php_output_shortcode($attributes, $content = '')
 {
-    return '<pre><samp class="code-block language-php">'.strip_tags($content).'</samp></pre>';
+    return '<pre class="code-segement"><samp class="code-block code-output language-php">'.trim(strip_tags($content)).'</samp></pre>';
 }
 
 add_shortcode('php_output', 'php_output_shortcode');

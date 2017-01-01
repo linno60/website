@@ -258,7 +258,7 @@ footer {
 
 /* Atom One Light by Daniel Gamage | Original One Light Syntax theme from https://github.com/atom/one-light-syntax */
 
-.hljs {
+.code-block {
     display: block;
     overflow-x: auto;
     color: #383a42;

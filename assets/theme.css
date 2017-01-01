@@ -100,9 +100,14 @@ h2 a {
 	font-weight: bold;
 }
 
-article p {
+article p,
+article time {
 	margin-top: 2rem;
 	margin-bottom: 2rem;
+}
+
+article time {
+    display: block;
 }
 
 article {

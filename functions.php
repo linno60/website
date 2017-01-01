@@ -7,7 +7,7 @@ $content_width = 700;
  *
  * @return void
  */
-function tidyHeadAndHeaders()
+function tidy_head_and_headers()
 {
     remove_action('wp_head', 'rsd_link');
     remove_action('wp_head', 'wp_generator');
@@ -26,35 +26,35 @@ function tidyHeadAndHeaders()
     remove_action('template_redirect', 'rest_output_link_header', 11);
 }
 
-add_action('wp', 'tidyHeadAndHeaders');
+add_action('wp', 'tidy_head_and_headers');
 
 /**
  * Cleanup scripts.
  *
  * @return void
  */
-function scriptCleaup()
+function script_cleaup()
 {
 	if (!is_admin()) {
 		wp_deregister_script('wp-embed');
 	}
 }
 
-add_action('wp_footer', 'scriptCleaup');
+add_action('wp_footer', 'script_cleaup');
 
 /**
  * Register theme features.
  *
  * @return void
  */
-function themeFeatures()
+function theme_features()
 {
     add_theme_support('title-tag');
 
     register_nav_menu('main-menu', 'Websites main menu');
 }
 
-add_action('after_setup_theme', 'themeFeatures');
+add_action('after_setup_theme', 'theme_features');
 
 /**
  *  Register 'php' shortcode.
@@ -65,11 +65,24 @@ add_action('after_setup_theme', 'themeFeatures');
  */
 function php_shortcode($attributes, $content = '')
 {
-    return '<pre><code class="language-php">&lt;?php
-'.strip_tags($content).'</code></pre>';
+    return '<pre><code class="language-php">&lt;?php'.PHP_EOL.strip_tags($content).'</code></pre>';
 }
 
 add_shortcode('php', 'php_shortcode');
+
+/**
+ *  Register 'php_output' shortcode.
+ *
+ * @param  $attributes  array
+ * @param  $content  string
+ * @return string
+ */
+function php_output_shortcode($attributes, $content = '')
+{
+    return '<pre><samp class="language-php">'.strip_tags($content).'</samp></pre>';
+}
+
+add_shortcode('php_output', 'php_output_shortcode');
 
 /**
  *  Register 'code' shortcode.

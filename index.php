@@ -8,9 +8,7 @@
                     <?php the_title() ?>
                 </a>
             </h1>
-            <div class="meta">
-                    <p><?php the_date() ?></p>
-            </div>
+            <time datetime="<?php echo get_the_date('Y-m-d\TH:s') ?>"><?php the_date() ?></time>
             <div class="tldr">
             	<strong>TLDR;</strong>
             	<?php echo get_the_excerpt() ?>

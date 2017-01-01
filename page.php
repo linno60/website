@@ -2,7 +2,7 @@
 <?php if (have_posts()) : ?>
     <?php while (have_posts()) : ?>
         <?php the_post(); ?>
-        <article>
+        <main>
             <h1 class="article-header">
                 <a href="<?php the_permalink(); ?>" class="dont-print-url">
                     <?php the_title() ?>
@@ -11,7 +11,7 @@
             <div class="content">
                 <?php the_content(); ?>
             </div>
-        </article>
+        </main>
     <?php endwhile; ?>
 <?php endif; ?>
 

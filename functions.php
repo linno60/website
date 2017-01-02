@@ -1,100 +1,103 @@
 <?php
 
-$content_width = 700;
+include 'Includer.php';
+
+Includer::includeDirectory(__DIR__.'/includes');
+
+MyTheme::register();
 
 /**
- * Tidy <head> and http headers.
+ * Determine if in local environment.
+ *
+ * @return bool
+ */
+function is_local_env()
+{
+    return 'local' === ENV;
+}
+
+/**
+ * Render the main menu.
+ *
+ * @param  string  $location
+ * @return string
+ */
+function get_menu($location = 'main')
+{
+    return wp_nav_menu([
+        'container' => 'nav',
+        'items_wrap' => '<ul>%3$s</ul>',
+        'theme_location' => $location
+    ]);
+}
+
+/**
+ * Asset url.
+ *
+ * @param  string  $asset
+ * @param  mixed  $version
+ * @return string
+ */
+function get_asset_url($asset, $version = null)
+{
+    if (is_local_env()) {
+        return '/wp-content/themes/theme/assets/'.$asset;
+    }
+
+    return get_cdn_asset_url($asset, $version);
+}
+
+/**
+ * CDN asset url.
+ *
+ * @param  string  $asset
+ * @param  mixed  $version
+ * @return string
+ */
+function get_cdn_asset_url($asset, $version = null)
+{
+    static $cdnBaseUrl = '';
+
+    if ('' === $cdnBaseUrl) {
+        $cdnBaseUrl = cdn_asset_base_url();
+    }
+
+    $query = (null !== $version) ? '?v='.$version : '';
+
+    return $cdnBaseUrl.$asset.$query;
+}
+
+/**
+ * CDN asset base url.
+ *
+ * @return string
+ */
+function cdn_asset_base_url()
+{
+    $blogUrl = parse_url(get_bloginfo('url'));
+
+    return $blogUrl['scheme']
+          .'://cdn.'
+          .$blogUrl['host']
+          .'/website/';
+}
+
+/**
+ * Insert template.
  *
  * @return void
  */
-function tidy_head_and_headers()
+function insert_template($name)
 {
-    remove_action('wp_head', 'rsd_link');
-    remove_action('wp_head', 'wp_generator');
-    remove_action('wp_head', 'feed_links', 2);
-    remove_action('wp_head', 'wlwmanifest_link');
-    remove_action('wp_head', 'feed_links_extra', 3);
-    remove_action('wp_head', 'wp_resource_hints', 2);
-    remove_action('wp_head', 'wp_shortlink_wp_head', 10);
-    remove_action('wp_head', 'rest_output_link_wp_head', 10);
-    remove_action('wp_head', 'print_emoji_detection_script', 7);
-    remove_action('wp_head', 'wp_oembed_add_discovery_links', 10);
-
-    remove_action('wp_print_styles', 'print_emoji_styles');
-
-    remove_action('template_redirect', 'wp_shortlink_header', 11);
-    remove_action('template_redirect', 'rest_output_link_header', 11);
+    include __DIR__.'/templates/'.$name.'.php';
 }
 
-add_action('wp', 'tidy_head_and_headers');
-
 /**
- * Cleanup scripts.
+ * Current category permalink
  *
- * @return void
- */
-function script_cleaup()
-{
-	if (!is_admin()) {
-		wp_deregister_script('wp-embed');
-	}
-}
-
-add_action('wp_footer', 'script_cleaup');
-
-/**
- * Register theme features.
- *
- * @return void
- */
-function theme_features()
-{
-    add_theme_support('title-tag');
-
-    register_nav_menu('main-menu', 'Websites main menu');
-}
-
-add_action('after_setup_theme', 'theme_features');
-
-/**
- *  Register 'php' shortcode.
- *
- * @param  $attributes  array
- * @param  $content  string
  * @return string
  */
-function php_shortcode($attributes, $content = '')
+function get_category_permalink()
 {
-    return '<pre class="code-segement"><code class="code-block language-php">&lt;?php
-'.trim(strip_tags($content)).'</code></pre>';
+    return get_category_link(get_cat_ID(single_cat_title('', false)));
 }
-
-add_shortcode('php', 'php_shortcode');
-
-/**
- *  Register 'php_output' shortcode.
- *
- * @param  $attributes  array
- * @param  $content  string
- * @return string
- */
-function php_output_shortcode($attributes, $content = '')
-{
-    return '<div class="code-output-title">OUTPUT</div><pre class="code-segement"><samp class="code-block code-output language-php">'.trim(strip_tags($content)).'</samp></pre>';
-}
-
-add_shortcode('php_output', 'php_output_shortcode');
-
-/**
- *  Register 'code' shortcode.
- *
- * @param  $attributes  array
- * @param  $content  string
- * @return string
- */
-function code_shortcode($atts, $content = '')
-{
-    return '<code class="inline-code">'.$content.'</code>';
-}
-
-add_shortcode('code', 'code_shortcode');

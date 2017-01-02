@@ -1,1 +1,3 @@
-<?php include 'error-pages/404.html';
+<?php
+
+include 'error-pages/404.html';

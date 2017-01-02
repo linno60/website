@@ -1,7 +1,7 @@
 <?php get_header() ?>
 <div class="profile main-profile">
 	<a href="<?php bloginfo('url') ?>">
-		<img src="//cdn.timacdonald.me/uploads/profile-pic.png" alt="Tim MacDonald profile image" draggable="false" height="200" width="200">
+		<img src="<?php echo get_theme_mod('profile_image') ?>" alt="profile image" draggable="false" height="200" width="200">
 	</a>
 	<h1>
 		<a href="<?php bloginfo('url') ?>">

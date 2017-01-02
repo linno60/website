@@ -28,6 +28,7 @@ class MyTheme
     protected function registerCustomiserOptions()
     {
         add_action('customize_register', function ($customiser) {
+            $customiser->addSetting('profile_image');
             $customiser->add_control($this->profileImageControl($customiser));
         });
 
@@ -38,12 +39,11 @@ class MyTheme
      * Profile image control.
      *
      * @param  WP_Customize_Manager  $customiser
-     * @return WP_Customize_Media_Control
+     * @return WP_Customize_Image_Control
      */
     protected function profileImageControl($customiser)
     {
-        return new WP_Customize_Media_Control($customiser, 'profile_image', [
-          'mime_type' => 'image',
+        return new WP_Customize_Image_Control($customiser, 'profile_image', [
           'label' => 'Profile Image',
           'section' => 'title_tagline'
         ]);

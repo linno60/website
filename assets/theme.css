@@ -177,6 +177,7 @@ footer {
 
 .inline-code {
     padding: 0 0.5rem;
+    display: inline-block;
 }
 
 .width-container {

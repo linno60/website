@@ -43,7 +43,7 @@ class MyTheme
     protected function profileImageControl($customiser)
     {
         return new WP_Customize_Media_Control($customiser, 'image_control', [
-          'section' => 'media',
+          'section' => 'title_tagline',
           'mime_type' => 'image',
           'label' => 'Profile Image'
         ]);

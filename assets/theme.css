@@ -132,6 +132,8 @@ blockquote,
 }
 
 blockquote {
+    margin-left: 0;
+    margin-right: 0;
     font-style: italic;
     border-radius: 3px 0 0 3px;
     font-family: georgia, serif;
@@ -158,6 +160,10 @@ footer {
 .profile {
     margin: 4rem 0;
 	text-align: center;
+}
+
+.profile .name {
+    white-space: nowrap;
 }
 
 .profile img {

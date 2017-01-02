@@ -180,18 +180,18 @@ footer {
     margin: 4rem auto;
 }
 
-.menu-main-container ul {
+nav ul {
     margin: 4rem 0;
     padding: 0;
     list-style: none;
 }
 
-.menu-main-container li {
+nav li {
     margin: 0 0.25rem;
     display: inline-block;
 }
 
-.menu-main-container a {
+nav a {
     color: #bbb;
     font-weight: normal;
 }

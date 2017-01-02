@@ -28,7 +28,7 @@ class MyTheme
     protected function registerCustomiserOptions()
     {
         add_action('customize_register', function ($customiser) {
-            $customiser->addSetting('profile_image');
+            $customiser->add_setting('profile_image');
             $customiser->add_control($this->profileImageControl($customiser));
         });
 

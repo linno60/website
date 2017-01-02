@@ -28,7 +28,9 @@ class MyTheme
     protected function registerCustomiserOptions()
     {
         add_action('customize_register', function ($customiser) {
-            $customiser->add_control($this->profileImageControl($customiser));
+            $customiser->add_control(
+                'profile_image', $this->profileImageControl($customiser)
+            );
         });
 
         return $this;
@@ -43,9 +45,9 @@ class MyTheme
     protected function profileImageControl($customiser)
     {
         return new WP_Customize_Media_Control($customiser, 'image_control', [
-
           'mime_type' => 'image',
-          'label' => 'Profile Image'
+          'label' => 'Profile Image',
+          'section' => 'title_tagline'
         ]);
     }
 

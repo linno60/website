@@ -15,9 +15,32 @@ class MyTheme
              ->setThemeFeatures()
              ->removeHeadActions()
              ->registerShortcodes()
+             ->removeMenuAttributes()
              ->removePrintStylesActions()
              ->registerCustomiserOptions()
              ->removeTemplateRedirectActions();
+    }
+
+    /**
+     * Remove default menu classes.
+     *
+     * @return $this
+     */
+    protected function removeMenuAttributes()
+    {
+        add_filter('nav_menu_css_class', function ($classes) {
+            if (in_array('current-menu-item', $classes)) {
+                return ['current'];
+            }
+
+            return [];
+        });
+
+        add_filter('nav_menu_item_id', function ($id) {
+            return null;
+        });
+
+        return $this;
     }
 
     /**

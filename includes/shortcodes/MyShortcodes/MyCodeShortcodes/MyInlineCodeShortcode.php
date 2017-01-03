@@ -18,7 +18,7 @@ class MyInlineCodeShortcode extends MyCodeShortcode
      */
     protected function run($attributes, $content)
     {
-        $code = $this->cleanCode($content);
+        $code = parent::run($attributes, $content);
 
         return '<code class="box inline-code">'.$code.'</code>';
     }

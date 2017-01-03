@@ -1,7 +1,14 @@
 <?php
 
-abstract class MyCodeShortcode extends MyShortcode
+class MyClassHighlighterShortcode extends MyCodeShortcode
 {
+    /**
+     * Tag to use shortcode i.e. [tag]
+     *
+     * @var string
+     */
+    const TAG = 'class';
+
     /**
      * Run shortcode.
      *
@@ -13,6 +20,6 @@ abstract class MyCodeShortcode extends MyShortcode
     {
         $code = parent::run($attributes, $content);
 
-        return trim(strip_tags($code, '<span>'));
+        return '<span class="hljs-title">'.$code.'</span>';
     }
 }

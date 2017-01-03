@@ -46,5 +46,8 @@ abstract class MyShortcode
      * @param  string  $content
      * @return string
      */
-    abstract protected function run($attributes, $content);
+    protected function run($attributes, $content)
+    {
+        return do_shortcode($content);
+    }
 }

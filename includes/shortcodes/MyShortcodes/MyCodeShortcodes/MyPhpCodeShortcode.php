@@ -18,7 +18,7 @@ class MyPhpCodeShortcode extends MyCodeShortcode
      */
     protected function run($attributes, $content)
     {
-        $code = $this->cleanCode($content);
+        $code = parent::run($attributes, $content);
 
         return <<<HTML
 <pre class="code-segement"><code class="box language-php">&lt;?php

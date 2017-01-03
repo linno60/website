@@ -82,6 +82,8 @@ class MyTheme
         MyPhpCodeShortcode::register();
         MyPhpOutputShortcode::register();
         MyInlineCodeShortcode::register();
+        MyClassHighlighterShortcode::register();
+        MyKeywordHighlighterShortcode::register();
 
         return $this;
     }

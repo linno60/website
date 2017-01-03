@@ -18,7 +18,7 @@ class MyPhpOutputShortcode extends MyCodeShortcode
      */
     protected function run($attributes, $content)
     {
-        $code = $this->cleanCode($content);
+        $code = parent::run($attributes, $content);
 
         return <<<HTML
 <div class="code-segement">

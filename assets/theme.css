@@ -68,9 +68,17 @@ a {
     text-decoration: none;
 }
 
+.update a {
+    color: #fff;
+}
+
 a:hover,
 .current a {
 	color: #4342a0;
+}
+
+.update a:hover {
+    color: #eee;
 }
 
 h1 a,

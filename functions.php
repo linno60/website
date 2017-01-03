@@ -43,12 +43,14 @@ function get_asset_url($asset, $version = null, $extension = '')
 {
     if (is_local_env()) {
 
-        $asset = (null === $version) ? $asset : implode('.', [$asset, $extension]);
+        $filename = (null === $version) ? $asset : implode('.', [$asset, $extension]);
 
         return '/wp-content/themes/theme/assets/'.$asset;
     }
 
-    return get_cdn_asset_url(implode('.', [$asset, $version, $extension]));
+    $filename = (null === $version) ? $asset : implode('.', [$asset, $version, $extension]);
+
+    return get_cdn_asset_url($filename);
 }
 
 /**

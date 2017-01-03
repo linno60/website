@@ -35,26 +35,24 @@ function get_menu($location = 'main')
  * Asset url.
  *
  * @param  string  $asset
- * @param  mixed  $version
  * @return string
  */
-function get_asset_url($asset, $version = null)
+function get_asset_url($asset)
 {
     if (is_local_env()) {
         return '/wp-content/themes/theme/assets/'.$asset;
     }
 
-    return get_cdn_asset_url($asset, $version);
+    return get_cdn_asset_url($asset);
 }
 
 /**
  * CDN asset url.
  *
  * @param  string  $asset
- * @param  mixed  $version
  * @return string
  */
-function get_cdn_asset_url($asset, $version = null)
+function get_cdn_asset_url($asset)
 {
     static $cdnBaseUrl = '';
 
@@ -62,9 +60,7 @@ function get_cdn_asset_url($asset, $version = null)
         $cdnBaseUrl = cdn_asset_base_url();
     }
 
-    $query = (null !== $version) ? '?v='.$version : '';
-
-    return $cdnBaseUrl.$asset.$query;
+    return $cdnBaseUrl.$asset;
 }
 
 /**

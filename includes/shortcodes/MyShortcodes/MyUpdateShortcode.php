@@ -31,6 +31,7 @@ class MyUpdateShortcode extends MyShortcode
         $html  = '<div class="box update">';
         $html .=    '<strong>';
         $html .=        (null === $date) ? 'UPDATED;' : 'UPDATED '.$date.';';
+        $html .=        $update;
         $html .=    '</strong>';
         $html .= '</div>';
 

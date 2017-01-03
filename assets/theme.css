@@ -68,17 +68,9 @@ a {
     text-decoration: none;
 }
 
-.update a {
-    color: #fff;
-}
-
 a:hover,
 .current a {
 	color: #4342a0;
-}
-
-.update a:hover {
-    color: #eee;
 }
 
 h1 a,
@@ -142,9 +134,8 @@ time {
 }
 
 .update {
-    color: #fff;
-    background: #555;
-    border-color: #464646;
+    background: #eee;
+    border-color: #d6d6d6;
 }
 
 blockquote {
@@ -192,6 +183,7 @@ footer {
 }
 
 .inline-code {
+    margin: 0;
     padding: 0 0.5rem;
     display: inline-block;
 }

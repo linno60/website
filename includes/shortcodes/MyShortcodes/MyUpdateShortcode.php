@@ -27,15 +27,13 @@ class MyUpdateShortcode extends MyShortcode
         ], $attributes);
 
         $date = $this->parseDate($date);
+        $date = (null === $date) ? 'UPDATED;' : 'UPDATED '.$date.';';
 
-        $html  = '<div class="box update">';
-        $html .=    '<strong>';
-        $html .=        (null === $date) ? 'UPDATED;' : 'UPDATED '.$date.';';
-        $html .=    '</strong>';
-        $html .=    $update;
-        $html .= '</div>';
-
-        return $html;
+        return <<<HTML
+<div class="box update">
+    <strong>$date</strong> $update
+</div>
+HTML;
     }
 
     /**

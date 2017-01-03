@@ -12,6 +12,7 @@ ga('create', 'UA-89608436-1', 'auto');
 ga('send', 'pageview');
 /** Custom **/
 hljs.configure({selector: 'pre samp, pre code'});
+hljs.initHighlightingOnLoad();
 document.addEventListener('turbolinks:load', function () {
   hljs.initHighlighting();
 });

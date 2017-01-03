@@ -134,6 +134,12 @@ blockquote,
     border-bottom-width: 3px;
 }
 
+.update {
+    color: #fff;
+    background: #555;
+    border-color: #464646;
+}
+
 blockquote {
     margin-left: 0;
     margin-right: 0;

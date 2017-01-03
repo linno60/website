@@ -79,6 +79,7 @@ class MyTheme
      */
     protected function registerShortcodes()
     {
+        MyUpdateShortcode::register();
         MyPhpCodeShortcode::register();
         MyPhpOutputShortcode::register();
         MyInlineCodeShortcode::register();

@@ -6,7 +6,7 @@
  */
 function isLinkToWebsite(link)
 {
-    return -1 != link.href.indexOf('://timacdonald.me')
+    return -1 != link.href.indexOf('://timacdonald.me');
 }
 
 /**

@@ -35,15 +35,20 @@ function get_menu($location = 'main')
  * Asset url.
  *
  * @param  string  $asset
+ * @param  mixed  $version
+ * @param  string  $version
  * @return string
  */
-function get_asset_url($asset)
+function get_asset_url($asset, $version = null, $extension = '')
 {
     if (is_local_env()) {
+
+        $asset = (null === $version) ? $asset : implode('.', [$asset, $extension]);
+
         return '/wp-content/themes/theme/assets/'.$asset;
     }
 
-    return get_cdn_asset_url($asset);
+    return get_cdn_asset_url(implode('.', [$asset, $version, $extension]));
 }
 
 /**

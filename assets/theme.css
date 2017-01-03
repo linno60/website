@@ -206,6 +206,11 @@ nav a {
     font-weight: normal;
 }
 
+.turbolinks-progress-bar {
+    height: 3px;
+    background: #4342a0;
+}
+
 .code-segement code,
 .code-segement samp {
     display: block;

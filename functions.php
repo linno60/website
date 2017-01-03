@@ -24,11 +24,14 @@ function is_local_env()
  */
 function get_menu($location = 'main')
 {
-    return wp_nav_menu([
-        'container' => 'nav',
-        'items_wrap' => '<ul>%3$s</ul>',
-        'theme_location' => $location
+    $html = wp_nav_menu([
+        'echo' => false,
+        'container' => null,
+        'theme_location' => $location,
+        'items_wrap' => '<ul>%3$s</ul>'
     ]);
+
+    return '<nav>'.$html.'</nav>';
 }
 
 /**
@@ -45,7 +48,7 @@ function get_asset_url($asset, $version = null, $extension = '')
 
         $filename = (null === $version) ? $asset : implode('.', [$asset, $extension]);
 
-        return '/wp-content/themes/theme/assets/'.$asset;
+        return '/wp-content/themes/theme/assets/'.$filename;
     }
 
     $filename = (null === $version) ? $asset : implode('.', [$asset, $version, $extension]);

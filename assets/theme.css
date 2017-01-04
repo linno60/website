@@ -212,7 +212,6 @@ nav a {
 }
 
 .turbolinks-progress-bar {
-    height: 3px;
     background: #4342a0;
 }
 
@@ -225,11 +224,11 @@ nav a {
 }
 
 .code-segement code {
-    color: #383a42;
+    color: #555;
 }
 
 .code-segement samp {
-    color: #fff;
+    color: #fafafa;
     margin-top: 0;
     border-top: 0;
     background: #444;

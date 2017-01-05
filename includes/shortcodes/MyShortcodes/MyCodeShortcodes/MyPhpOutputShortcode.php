@@ -7,7 +7,7 @@ class MyPhpOutputShortcode extends MyCodeShortcode
      *
      * @var string
      */
-    const TAG = 'php_output';
+    const TAG = 'code_output';
 
     /**
      * Run shortcode.

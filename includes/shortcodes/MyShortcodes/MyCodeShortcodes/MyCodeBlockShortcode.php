@@ -1,6 +1,6 @@
 <?php
 
-class MyPhpCodeShortcode extends MyCodeShortcode
+class MyCodeBlockShortcode extends MyCodeShortcode
 {
     /**
      * Tag to use shortcode i.e. [tag]
@@ -20,30 +20,17 @@ class MyPhpCodeShortcode extends MyCodeShortcode
     {
         $attributes = shortcode_atts([
             'lang' => 'php',
-            'repo' => null
+            'repo' => ''
         ], $attributes);
 
         $code = parent::run($attributes, $content);
 
         $language = $attributes['lang'];
 
-        $repo = $this->repoAttribute($attributes['repo']);
-
         return <<<HTML
-<pre class="code-segement"><code class="box language-$language"$repo>&lt;?php
+<pre class="code-segement"><code class="box language-$language" itemscope itemtype="http://schema.org/SoftwareSourceCode" codeRepository="$repo" codeSampleType="code snippet" programmingLanguage="$language">&lt;?php
 
 $code</code></pre>
 HTML;
-    }
-
-    /**
-     * Repo attribute.
-     *
-     * @param  string  $repo
-     * @return string
-     */
-    protected function repoAttribute($repo)
-    {
-        return (null !== $repo) ? ' codeRepository="'.$repo.'"' : '';
     }
 }

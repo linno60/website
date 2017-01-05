@@ -80,8 +80,8 @@ class MyTheme
     protected function registerShortcodes()
     {
         MyUpdateShortcode::register();
-        MyPhpCodeShortcode::register();
-        MyPhpOutputShortcode::register();
+        MyCodeBlockShortcode::register();
+        MyCodeOutputShortcode::register();
         MyInlineCodeShortcode::register();
         MyClassHighlighterShortcode::register();
         MyKeywordHighlighterShortcode::register();

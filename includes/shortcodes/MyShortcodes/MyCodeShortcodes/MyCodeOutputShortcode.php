@@ -30,7 +30,7 @@ class MyCodeOutputShortcode extends MyCodeShortcode
         return <<<HTML
 <div class="code-segement">
     <div class="box title">RESULT</div>
-    <pre><samp class="box language-$language" itemscope itemtype="http://schema.org/SoftwareSourceCode" codeSampleType="code snippet" programmingLanguage="$language">$code</samp></pre>
+    <pre itemscope itemtype="http://schema.org/SoftwareSourceCode"><samp class="box language-$language" codeSampleType="code snippet" programmingLanguage="$language">$code</samp></pre>
 </div>
 HTML;
     }

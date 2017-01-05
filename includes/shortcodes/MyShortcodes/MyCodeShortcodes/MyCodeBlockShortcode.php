@@ -28,7 +28,7 @@ class MyCodeBlockShortcode extends MyCodeShortcode
         $language = $attributes['lang'];
 
         return <<<HTML
-<pre class="code-segement"><code class="box language-$language" itemscope itemtype="http://schema.org/SoftwareSourceCode" codeRepository="$repo" codeSampleType="code snippet" programmingLanguage="$language">&lt;?php
+<pre class="code-segement" itemscope itemtype="http://schema.org/SoftwareSourceCode"><code class="box language-$language" codeRepository="$repo" codeSampleType="code snippet" programmingLanguage="$language">&lt;?php
 
 $code</code></pre>
 HTML;

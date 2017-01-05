@@ -24,13 +24,10 @@ class MyCodeOutputShortcode extends MyCodeShortcode
 
         $code = parent::run($attributes, $content);
 
-        $language = $attributes['lang'];
-        $repo = $attributes['repo'];
-
         return <<<HTML
 <div class="code-segement">
     <div class="box title">RESULT</div>
-    <pre itemscope itemtype="http://schema.org/SoftwareSourceCode"><samp class="box language-$language" codeSampleType="code snippet" programmingLanguage="$language">$code</samp></pre>
+    <pre itemscope itemtype="http://schema.org/SoftwareSourceCode"><samp class="box language-{$attributes['lang']}" codeSampleType="code snippet" programmingLanguage="$language">$code</samp></pre>
 </div>
 HTML;
     }

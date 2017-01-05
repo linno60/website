@@ -25,10 +25,8 @@ class MyCodeBlockShortcode extends MyCodeShortcode
 
         $code = parent::run($attributes, $content);
 
-        $language = $attributes['lang'];
-
         return <<<HTML
-<pre class="code-segement" itemscope itemtype="http://schema.org/SoftwareSourceCode"><code class="box language-$language" codeRepository="$repo" codeSampleType="code snippet" programmingLanguage="$language">&lt;?php
+<pre class="code-segement" itemscope itemtype="http://schema.org/SoftwareSourceCode"><code class="box language-{$attributes['lang']}" codeRepository="$repo" codeSampleType="code snippet" programmingLanguage="{$attributes['lang']}">&lt;?php
 
 $code</code></pre>
 HTML;

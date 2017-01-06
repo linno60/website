@@ -107,3 +107,87 @@ function get_category_permalink()
 {
     return get_category_link(get_cat_ID(single_cat_title('', false)));
 }
+
+/**
+ * Determine if AMP access.
+ *
+ * @return bool
+ */
+function is_amp()
+{
+    return isset($_GET['amp']);
+}
+
+/**
+ * Asset contents.
+ *
+ * @return string
+ */
+function get_asset_contents($asset)
+{
+    return file_get_contents(__DIR__.'/assets/'.$asset);
+}
+
+/**
+ * Current base url.
+ *
+ * @return string
+ */
+function get_base_url()
+{
+    return 'https://'
+          .$_SERVER['HTTP_HOST']
+          .$_SERVER['PHP_SELF'];
+}
+
+/**
+ * Non amp current url.
+ *
+ * @return string
+ */
+function get_non_amp_url()
+{
+    return get_base_url().get_non_amp_query_string();
+}
+
+/**
+ * Current url as amp.
+ *
+ * @return string
+ */
+function get_amp_url()
+{
+     return get_base_url().get_amp_query_string();
+}
+
+/**
+ * Non amp query string.
+ *
+ * @return string
+ */
+function get_non_amp_query_string()
+{
+    $parameters = $_GET;
+
+    unset($parameters['amp']);
+
+    if ([] === $parameters) {
+        return '';
+    }
+
+    return '?'.http_build_query($parameters);
+}
+
+/**
+ * Amp query string.
+ *
+ * @return string
+ */
+function get_amp_query_string()
+{
+    $parameters = $_GET;
+
+    $parameters['amp'] = 1;
+
+    return '?'.http_build_query($parameters);
+}

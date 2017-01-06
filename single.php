@@ -1,21 +1,19 @@
 <?php get_header() ?>
 <?php the_post() ?>
-<article itemscope itemtype="http://schema.org/TechArticle">
-    <h1 itemprop="headline">
+<article>
+    <h1>
         <a class="dont-print-url" href="<?php the_permalink() ?>">
             <?php the_title() ?>
         </a>
     </h1>
-    <time datetime="<?php echo get_the_date('Y-m-d\TH:s') ?>" itemprop="datePublished">
+    <time datetime="<?php echo get_the_date('Y-m-d\TH:s') ?>">
         <?php the_date() ?>
     </time>
-    <div class="box" itemprop="about">
+    <div class="box">
     	<strong>TLDR;</strong>
-    	<span itemprop="description"><?php echo get_the_excerpt() ?></span>
+    	<?php echo get_the_excerpt() ?>
     </div>
-    <div itemprop="articleBody">
-        <?php the_content() ?>
-    </div>
+    <?php the_content() ?>
 </article>
 <?php insert_template('footer') ?>
 <?php get_footer() ?>

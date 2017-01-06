@@ -1,14 +1,14 @@
 <?php get_header() ?>
-<div class="profile main-profile" itemscope itemtype="http://schema.org/Person">
+<div class="profile main-profile">
 	<a href="<?php bloginfo('url') ?>">
-		<img src="<?php echo get_theme_mod('profile_image') ?>" alt="profile image" draggable="false" height="200" width="200" itemprop="image">
+		<<?php if (is_amp()) : ?>amp-img<?php else : ?>img<?php endif ?> src="<?php echo get_theme_mod('profile_image') ?>" class="img" alt="profile image" draggable="false" height="200" width="200"><?php if (is_amp()) : ?></amp-img><?php endif; ?>
 	</a>
-	<h1 itemprop="name">
-		<a href="<?php bloginfo('url') ?>" itemprop="url">
+	<h1>
+		<a href="<?php bloginfo('url') ?>">
             <?php bloginfo('name') ?>
         </a>
 	</h1>
-	<p itemprop="description">
+	<p>
 		<?php bloginfo('description') ?>
 	</p>
 	&middot; &middot; &middot;

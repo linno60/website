@@ -1,15 +1,15 @@
-<div class="profile" itemscope itemtype="http://schema.org/Person">
+<div class="profile">
     <p>
         <a class="dont-print-url" href="<?php bloginfo('url') ?>">
-            <img src="<?php echo get_theme_mod('profile_image') ?>" alt="profile image" draggable="false" height="100" width="100" itemprop="image">
+            <<?php if (is_amp()) : ?>amp-img<?php else : ?>img<?php endif ?> src="<?php echo get_theme_mod('profile_image') ?>" class="img" alt="profile image" draggable="false" height="100" width="100">
         </a>
-        <span itemprop="name">
-            <a class="name dont-print-url" href="<?php bloginfo('url') ?>" itemprop="url">
+        <span>
+            <a class="name dont-print-url" href="<?php bloginfo('url') ?>">
                 <?php bloginfo('name') ?>
             </a>
         </span>
     </p>
-    <p itemprop="description">
+    <p>
         <?php bloginfo('description') ?>
     </p>
 </div>

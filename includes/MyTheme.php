@@ -86,6 +86,14 @@ class MyTheme
         MyClassHighlighterShortcode::register();
         MyKeywordHighlighterShortcode::register();
 
+        add_filter('the_content', function ($content) {
+            return strtr($content, [
+                '<p>[' => '[',
+                ']</p>' => ']',
+                ']<br />' => ']'
+            ]);
+        });
+
         return $this;
     }
 

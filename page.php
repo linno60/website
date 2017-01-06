@@ -6,9 +6,7 @@
             <?php the_title() ?>
         </a>
     </h1>
-    <div>
-        <?php the_content() ?>
-    </div>
+    <?php the_content() ?>
 </main>
 <?php insert_template('footer') ?>
 <?php get_footer() ?>

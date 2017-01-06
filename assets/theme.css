@@ -29,8 +29,6 @@ hr {
     border-top: 1px solid #eee;
 }
 
-audio,canvas,iframe,img,svg,video{vertical-align:middle}fieldset{border:0;margin:0;padding:0}textarea{resize:vertical}
-
 /** Theme **/
 
 ul {
@@ -60,6 +58,7 @@ strong {
 img {
     height: auto;
     max-width: 100%;
+    vertical-align:middle;
 }
 
 a {
@@ -173,12 +172,12 @@ footer {
     white-space: nowrap;
 }
 
-.profile img {
+.profile .img {
 	border-radius: 50%;
     margin: 0 1rem;
 }
 
-.main-profile img {
+.main-profile .img {
     margin: 0 1rem 1rem;
 }
 
@@ -215,6 +214,18 @@ nav a {
     background: #4342a0;
 }
 
+/** for amp **/
+.highlight-link {
+    top: -0.5rem;
+    float:right;
+    position:relative;
+    font-size: 0.75rem;
+}
+
+.code-segement {
+    clear: both; /** for amp **/
+}
+
 .code-segement code,
 .code-segement samp {
     display: block;
@@ -236,7 +247,7 @@ nav a {
     border-radius: 0 0 3px 3px;
 }
 
-.code-segement pre {
+pre {
     margin: 0;
 }
 
@@ -249,6 +260,11 @@ nav a {
     border-color: #464646;
     font-family: monospace;
     border-radius: 3px 3px 0 0;
+}
+
+.is-amp .hljs-title,
+.is-amp .hljs-keyword {
+    color: inherit;
 }
 
 /*! Atom One Light by Daniel Gamage | Original One Light Syntax theme from https://github.com/atom/one-light-syntax */
@@ -407,13 +423,46 @@ samp .hljs a:hover {
     text-decoration: underline;
 }
 
-/** Helpers **/.hidden{display:none!important}.visuallyhidden{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.visuallyhidden.focusable:active,.visuallyhidden.focusable:focus{clip:auto;height:auto;margin:0;overflow:visible;position:static;width:auto}.invisible{visibility:hidden}.clearfix:before,.clearfix:after{content:" ";display:table}.clearfix:after{clear:both}
 /** Print **/
 @media print {
-    *,*:before,*:after,*:first-letter,*:first-line{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")"}abbr[title]:after{content:" (" attr(title) ")"}a[href^="#"]:after,a[href^="javascript:"]:after{content:""}pre,blockquote{page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}p,h2,h3{orphans:3;widows:3}h2,h3{page-break-after:avoid}
 
-    .dont-print {
-    	display: none! important;
+    a[href]:after {
+        content: " (" attr(href) ")"
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")"
+    }
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: ""
+    }
+
+    pre,
+    blockquote{
+        page-break-inside:avoid
+    }
+
+    img {
+        max-width:100%;
+        page-break-inside: avoid;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans :3;
+        widows: 3
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid
+    }
+
+    *.dont-print {
+    	display: none;
     }
 
     a.dont-print-url:after {

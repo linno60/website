@@ -135,9 +135,9 @@ function get_asset_contents($asset)
  */
 function get_base_url()
 {
-    return 'https://'
-          .$_SERVER['HTTP_HOST']
-          .$_SERVER['REQUEST_URI'];
+    $url = parse_url('https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+
+    return $url['scheme'].'://'.$url['host'].$url['path'];
 }
 
 /**

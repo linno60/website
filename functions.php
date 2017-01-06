@@ -137,7 +137,7 @@ function get_base_url()
 {
     return 'https://'
           .$_SERVER['HTTP_HOST']
-          .$_SERVER['PHP_SELF'];
+          .$_SERVER['REQUEST_URI'];
 }
 
 /**

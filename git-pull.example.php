@@ -12,5 +12,5 @@ if ($githubSignature !== $realSignature) {
 }
 
 exec('git pull', $result);
-
+exec('rm -rf buildable');
 var_dump($result);

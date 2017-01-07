@@ -11,6 +11,7 @@ class MyTheme
     public function __construct()
     {
         $this->cleanFooter()
+             ->removeSchemaOrg()
              ->setContentWidth()
              ->setThemeFeatures()
              ->removeHeadActions()

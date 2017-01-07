@@ -5,5 +5,4 @@
     </a>
 </h1>
 <?php insert_template('index-article-list') ?>
-<?php insert_template('footer') ?>
 <?php get_footer() ?>

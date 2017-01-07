@@ -1,3 +1,6 @@
+            <footer>
+                <?php insert_template('menu') ?>
+            </footer>
         </div>
         <?php if (is_amp()) : ?>
             <amp-analytics type="googleanalytics" id="analytics">

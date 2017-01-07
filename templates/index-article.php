@@ -1,11 +1,11 @@
-<article class="index-article">
-    <h2>
-        <a href="<?php the_permalink() ?>" class="dont-print-url">
+<article class="index-article" itemscope itemtype="http://schema.org/TechArticle">
+    <h2 itemprop="headline">
+        <a href="<?php the_permalink() ?>" class="dont-print-url" itemprop="url">
             <?php the_title() ?>
         </a>
     </h2>
-    <time datetime="<?php echo get_the_date('Y-m-d\TH:s') ?>">
+    <time datetime="<?php echo get_the_date('Y-m-d\TH:s') ?>" itemprop="datePublished">
         <?php the_date() ?>
     </time>
-    <?php the_excerpt() ?>
+    <div itemprop="description"><?php the_excerpt() ?></div>
 </article>

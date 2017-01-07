@@ -22,6 +22,20 @@ class MyTheme
     }
 
     /**
+     * Remove schema.org stuff.
+     *
+     * @return $this
+     */
+    protected function removeSchemaOrg()
+    {
+        add_filter('wpseo_json_ld_output', function () {
+            return [];
+        }, 10, 1);
+
+        return $this;
+    }
+
+    /**
      * Remove default menu classes.
      *
      * @return $this

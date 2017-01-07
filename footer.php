@@ -9,7 +9,7 @@
             <script>window.dontTrack = true</script>
         <?php endif ?>
         <?php if (!is_amp()) : ?>
-            <script async src="<?php echo get_asset_url('theme', 13, 'js') ?>"></script>
+            <script async src="<?php echo get_asset_url('theme', 14, 'js') ?>"></script>
         <?php endif ?>
         <?php if (is_amp() && !is_local_env()) : ?>
             <amp-analytics type="googleanalytics" id="analytics">

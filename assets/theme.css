@@ -62,14 +62,13 @@ img {
 }
 
 a {
-	color: #000;
+	color: #4342a0;
     font-weight: normal;
     text-decoration: none;
 }
 
-a:hover,
-.current a {
-	color: #4342a0;
+a:hover {
+	color: inherit;
 }
 
 h1 a,
@@ -78,7 +77,15 @@ h3 a,
 h4 a,
 h5 a,
 h6 a {
-	font-weight: bold;
+    font-weight: bold;
+}
+
+h1 a {
+    color: inherit;
+}
+
+h1 a:hover {
+    color: #4342a0;
 }
 
 h1 {
@@ -159,8 +166,9 @@ blockquote :last-child {
 }
 
 footer {
-    margin: 4rem 0;
 	text-align: center;
+    background: #4342a0;
+    padding: 2rem 0.25rem;
 }
 
 .profile {
@@ -169,15 +177,34 @@ footer {
 }
 
 .profile .name {
+    color: inherit;
     white-space: nowrap;
 }
 
-.profile .img {
-	border-radius: 50%;
-    margin: 0 1rem;
+.profile .name:hover {
+    color: #4342a0;
 }
 
-.main-profile .img {
+.profile .img,
+.profile-img-link {
+    border-radius: 50%;
+}
+
+.profile-img-link {
+    margin: 0 1rem;
+    display: inline-block;
+}
+
+.profile-img-link:hover {
+    background: #4342a0;
+    box-shadow: 0 0 0 1px #4342a0;
+}
+
+.profile-img-link:hover img {
+    opacity: 0.9;
+}
+
+.main-profile .profile-img-link {
     margin: 0 1rem 1rem;
 }
 
@@ -195,7 +222,7 @@ footer {
 }
 
 nav ul {
-    margin: 4rem 0;
+    margin: 0;
     padding: 0;
     list-style: none;
 }
@@ -206,8 +233,14 @@ nav li {
 }
 
 nav a {
-    color: #bbb;
+    color: #fff;
+    color: rgba(255, 255, 255, 0.3);
     font-weight: normal;
+}
+
+.current a,
+nav a:hover {
+    color: #fff;
 }
 
 .turbolinks-progress-bar {

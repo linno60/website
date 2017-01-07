@@ -12,5 +12,5 @@ if ($githubSignature !== $realSignature) {
 }
 
 exec('git pull', $result);
-exec('rm -rf buildable');
+exec('rm -rf buildable gulpfile.js package.json readme.md');
 var_dump($result);

@@ -1,0 +1,282 @@
+/*! HTML5 Boilerplate v5.3.0 | MIT License | https://html5boilerplate.com/ */
+
+html {
+    color: #333;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 300;
+    background: $off-white;
+    box-sizing: border-box;
+}
+
+::-moz-selection {
+    text-shadow: none;
+    background: $accent-light;
+}
+
+::selection {
+    text-shadow: none;
+    background: $accent-light;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    padding: 0;
+    margin: 1em 0;
+    display: block;
+    border-top: 1px solid $grey;
+}
+
+/** Theme **/
+
+ul {
+    margin: $reg-space 0;
+    padding-left: $sml-space;
+}
+
+ul ul {
+    margin: 0.5rem 0;
+}
+
+li {
+    margin: 0.5rem 0;
+}
+
+b,
+strong {
+    font-weight: 900;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+    vertical-align:middle;
+}
+
+a {
+    color: $accent;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+a:hover {
+    color: inherit;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+    font-weight: bold;
+}
+
+h1 a {
+    color: inherit;
+}
+
+h1 a:hover {
+    color: $accent;
+}
+
+h1 {
+    margin: 0 0 $reg-space;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: $reg-space 0;
+}
+
+.profile h1 {
+    margin-bottom: $sml-space;
+}
+
+main,
+article {
+    margin: $lrg-space 0;
+}
+
+time {
+    display: block;
+}
+
+p,
+time {
+    margin: $reg-space 0;
+}
+
+.profile p,
+.index-article p,
+.index-article time {
+    margin-top: $sml-space;
+    margin-bottom: $sml-space;
+}
+
+.index-article h2 {
+    margin: 0 0 $sml-space;
+}
+
+.box {
+    margin: $reg-space 0;
+    background: #fff;
+    border-radius: 3px;
+    padding: 1rem 1.5rem;
+    border: 1px solid $grey;
+    border-bottom-width: 3px;
+}
+
+.update {
+    background: $grey;
+    border-color: #d6d6d6;
+}
+
+blockquote {
+    margin-left: 0;
+    margin-right: 0;
+    font-style: italic;
+    border-radius: 3px 0 0 3px;
+    font-family: georgia, serif;
+    padding: 1rem 0 1rem 1.5rem;
+    border-left: 3px solid $grey;
+    background: -moz-linear-gradient(left, #ffffff 0%, $off-white 100%);
+    background: -webkit-linear-gradient(left, #ffffff 0%, $off-white 100%);
+    background: linear-gradient(to right, #ffffff 0%, $off-white 100%);
+}
+
+blockquote :first-child {
+    margin-top: 0;
+}
+
+blockquote :last-child {
+    margin-bottom: 0;
+}
+
+footer {
+    text-align: center;
+    background: $accent;
+    padding: $reg-space 0.25rem;
+}
+
+.profile {
+    margin: $lrg-space 0;
+    text-align: center;
+}
+
+.profile .name {
+    color: inherit;
+    white-space: nowrap;
+}
+
+.profile .name:hover {
+    color: $accent;
+}
+
+.profile .img {
+    border-radius: 50%;
+    margin: 0 $sml-space;
+    vertical-align: middle;
+    border-style: none;
+}
+
+.main-profile .img {
+    margin: 0 $sml-space $sml-space;
+}
+
+.inline-code {
+    margin: 0;
+    padding: 0 0.5rem;
+    display: inline-block;
+}
+
+.width-container {
+    width: 750px;
+    max-width: 100%;
+    padding: 0 $sml-space;
+    margin: $lrg-space auto;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav li {
+    margin: 0 0.25rem;
+    display: inline-block;
+}
+
+nav a {
+    color: #fff;
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: normal;
+}
+
+.current a,
+nav a:hover {
+    color: #fff;
+}
+
+.turbolinks-progress-bar {
+    background: $accent;
+}
+
+/** for amp **/
+.highlight-link {
+    top: -0.5rem;
+    float:right;
+    position:relative;
+    font-size: 0.75rem;
+}
+
+.code-segement {
+    clear: both; /** for amp **/
+}
+
+.code-segement code,
+.code-segement samp {
+    display: block;
+    line-height: 2;
+    overflow-x: auto;
+    font-size: 0.75rem;
+}
+
+.code-segement code {
+    color: #555;
+}
+
+.code-segement samp {
+    color: $off-white;
+    margin-top: 0;
+    border-top: 0;
+    background: #444;
+    border-color: #363636;
+    border-radius: 0 0 3px 3px;
+}
+
+pre {
+    margin: 0;
+}
+
+.code-segement .title {
+    color: $off-white;
+    margin-bottom: 0;
+    background: #555;
+    border-bottom: 0;
+    font-weight: normal;
+    border-color: #464646;
+    font-family: monospace;
+    border-radius: 3px 3px 0 0;
+}

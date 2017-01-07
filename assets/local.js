@@ -4,7 +4,7 @@
  * @param  link
  * @return bool
  */
-function isLinkToWebsite(link)
+function is_link_to_website(link)
 {
     return -1 != link.href.indexOf('://timacdonald.me');
 }
@@ -15,7 +15,7 @@ function isLinkToWebsite(link)
  * @param  link
  * @return void
  */
-function pointToLocalWebsite(link)
+function point_to_local_website(link)
 {
     link.href = link.href.replace('://timacdonald.me', '://timacdonald.dev');
 }
@@ -23,7 +23,7 @@ function pointToLocalWebsite(link)
 var links = document.getElementsByTagName('a');
 
 for (var i = 0; i < links.length; i++) {
-    if (isLinkToWebsite(links[i])) {
-        pointToLocalWebsite(links[i]);
+    if (is_link_to_website(links[i])) {
+        point_to_local_website(links[i]);
     }
 }

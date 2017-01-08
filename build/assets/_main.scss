@@ -7,6 +7,10 @@ html {
     font-weight: 300;
     background: $off-white;
     box-sizing: border-box;
+    font-family: -apple-system, ".SFNSText-Regular", BlinkMacSystemFont,
+    "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
 }
 
 ::-moz-selection {
@@ -130,11 +134,11 @@ time {
 
 .box {
     margin: $reg-space 0;
-    background: #fff;
-    border-radius: 3px;
+    background: $box-background;
+    border-radius: $border-radius;
     padding: 1rem 1.5rem;
     border: 1px solid $grey;
-    border-bottom-width: 3px;
+    border-bottom-width: $border-radius;
 }
 
 .update {
@@ -146,13 +150,13 @@ blockquote {
     margin-left: 0;
     margin-right: 0;
     font-style: italic;
-    border-radius: 3px 0 0 3px;
+    border-radius: $border-radius 0 0 $border-radius;
     font-family: georgia, serif;
     padding: 1rem 0 1rem 1.5rem;
-    border-left: 3px solid $grey;
-    background: -moz-linear-gradient(left, #ffffff 0%, $off-white 100%);
-    background: -webkit-linear-gradient(left, #ffffff 0%, $off-white 100%);
-    background: linear-gradient(to right, #ffffff 0%, $off-white 100%);
+    border-left: $border-radius solid $grey;
+    background: -moz-linear-gradient(left, $box-background 0%, $off-white 100%);
+    background: -webkit-linear-gradient(left, $box-background 0%, $off-white 100%);
+    background: linear-gradient(to right, $box-background 0%, $off-white 100%);
 }
 
 blockquote :first-child {
@@ -195,9 +199,11 @@ footer {
 }
 
 .inline-code {
-    margin: 0;
-    padding: 0 0.5rem;
-    display: inline-block;
+    color: $code-color;
+    padding: 1px 5px;
+    background: $box-background;
+    box-shadow: 0 0 0 1px $grey;
+    border-radius: $border-radius;
 }
 
 .width-container {
@@ -253,7 +259,7 @@ nav a:hover {
 }
 
 .code-segement code {
-    color: #555;
+    color: $code-color;
 }
 
 .code-segement samp {
@@ -262,7 +268,7 @@ nav a:hover {
     border-top: 0;
     background: #444;
     border-color: #363636;
-    border-radius: 0 0 3px 3px;
+    border-radius: 0 0 $border-radius $border-radius;
 }
 
 pre {
@@ -272,10 +278,10 @@ pre {
 .code-segement .title {
     color: $off-white;
     margin-bottom: 0;
-    background: #555;
+    background: $code-color;
     border-bottom: 0;
     font-weight: normal;
     border-color: #464646;
     font-family: monospace;
-    border-radius: 3px 3px 0 0;
+    border-radius: $border-radius $border-radius 0 0;
 }

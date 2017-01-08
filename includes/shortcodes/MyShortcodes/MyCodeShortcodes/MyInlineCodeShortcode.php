@@ -20,6 +20,6 @@ class MyInlineCodeShortcode extends MyCodeShortcode
     {
         $code = parent::run($attributes, $content);
 
-        return '<code class="box inline-code">'.$code.'</code>';
+        return '<code class="inline-code">'.$code.'</code>';
     }
 }

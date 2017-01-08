@@ -8,7 +8,7 @@ $realSignature = hash_hmac('sha1', file_get_contents('php://input'), 'GITHUB_SEC
 
 if ($githubSignature !== $realSignature) {
     http_response_code(401);
-    die('signatures do not match');
+    die('signatures do not match.');
 }
 
 exec('git pull', $result);

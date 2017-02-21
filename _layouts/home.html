@@ -1,0 +1,32 @@
+---
+layout: default
+---
+<header class="profile main-profile" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="alternateName" content="TiMacDonald">
+    <meta itemprop="sameAs" content="{{ site.twitter_url }}">
+    <a href="{{ site.url }}">
+        <img src="/assets/img/profile.png" class="img" alt="profile image" draggable="false" height="125" width="125" itemprop="image">
+    </a>
+    <h1>
+        <a href="{{ site.url }}" itemprop="url">
+            {{ site.title }}
+        </a>
+    </h1>
+    <p itemprop="description">
+        {{ site.description }}
+    </p>
+    &middot; &middot; &middot;
+</header>
+<main>
+    {% for post in site.posts %}
+        <article class="index-article" itemscope itemtype="http://schema.org/TechArticle">
+            <h2 itemprop="headline">
+                <a href="{{ post.url }}" class="dont-print-url" itemprop="url">
+                    {{ post.title }}
+                </a>
+            </h2>
+            {% include post_date.html %}
+            <div itemprop="description">{{ post.excerpt }}</div>
+        </article>
+    {% endfor %}
+</main>

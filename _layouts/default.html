@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en-au">
+    <head>
+        <meta charset="utf-8">
+        {% if page.title %}
+            <title>{{ page.title }} &middot; {{ site.title }}</title>
+            <meta name="description" content="{{ page.excerpt }}">
+        {% else %}
+            <title>{{ site.title }} &middot; {{ site.description }}</title>
+            <meta name="description" content="{{ site.description }}">
+        {% endif %}
+        <link rel="canonical" href="{{site.url + page.url}}" />
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+        <link rel="manifest" href="/assets/data/manifest.json">
+        <link rel="mask-icon" color="#4342a0" href="/assets/img/safari-pinned-tab.svg">
+        <link rel="shortcut icon" href="/assets/img/favicon.ico">
+        <meta name="msapplication-config" content="/assets/data/browserconfig.xml">
+        <meta name="theme-color" content="#4342a0">
+        <link rel="stylesheet" href="/assets/css/main.css">
+    </head>
+    <body>
+        <div class="width-container">
+            {{ content }}
+        </div>
+        <footer class="dont-print">
+            <nav>
+                <ul>
+                    <li>
+                        <a href="{{ site.url }}/">Home</a>
+                    </li>
+                    <li>
+                        <a href="{{ site.url }}/about/">About</a>
+                    </li>
+                    <li>
+                        <a href="{{ site.twitter_url }}">Twitter</a>
+                    </li>
+                    <li>
+                        <a href="{{ site.github_url }}">GitHub</a>
+                    </li>
+                    <li>
+                        <a href="{{ site.linkedin_url }}">LinkedIn</a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
+        <script async src="/assets/js/main.js"></script>
+    </body>
+</html>

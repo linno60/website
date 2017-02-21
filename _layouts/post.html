@@ -1,0 +1,22 @@
+---
+layout: default
+---
+<article itemscope itemtype="http://schema.org/TechArticle">
+    {% include page_title.html %}
+    {% assign post = page %}
+    {% include post_date.html %}
+    <div class="box">
+        <strong>tl;dr;</strong>
+        <span itemprop="description">{{ page.excerpt }}</span>
+    </div>
+    {% if page.update %}
+        <div class="update box">
+            <strong>{{ post.update.date | date: '%B %d, %Y' }} Update:</strong>
+            {{ page.update.content }}
+        </div>
+    {% endif %}
+    <div itemprop="articleBody" itemprop="mainContentOfPage">
+        {{ content }}
+    </div>
+    {% include profile.html %}
+</article>

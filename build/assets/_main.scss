@@ -173,6 +173,20 @@ footer {
     padding: $reg-space 0.25rem;
 }
 
+.hosting-referral {
+    color: #2f2e70;
+    font-size:0.75rem;
+    margin-top:1rem;
+}
+
+.hosting-referral a {
+    color: inherit;
+}
+
+.hosting-referral a:hover {
+    color: #fff;
+}
+
 .profile {
     margin: $lrg-space 0;
     text-align: center;

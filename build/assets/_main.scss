@@ -112,11 +112,11 @@ h6 {
 }
 
 article header {
-    background: #2f2e70;
-    background: -moz-linear-gradient(-45deg, #2f2e70 0%, #4342a0 100%);
-    background: -webkit-linear-gradient(-45deg, #2f2e70 0%,#4342a0 100%);
-    background: linear-gradient(135deg, #2f2e70 0%,#4342a0 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2f2e70', endColorstr='#4342a0',GradientType=1 );
+    background: $accent;
+    background: -moz-linear-gradient(-45deg, #5e5de2 0%, #4342a0 100%);
+    background: -webkit-linear-gradient(-45deg, #5e5de2 0%,#4342a0 100%);
+    background: linear-gradient(135deg, #5e5de2 0%,#4342a0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5e5de2', endColorstr='#4342a0',GradientType=1 );
     padding: $lrg-space 0;
     color: #fff;
 }
@@ -179,6 +179,10 @@ blockquote :last-child {
 footer {
     text-align: center;
     background: $accent;
+    background: -moz-linear-gradient(-45deg, #5e5de2 0%, #4342a0 100%);
+    background: -webkit-linear-gradient(-45deg, #5e5de2 0%,#4342a0 100%);
+    background: linear-gradient(135deg, #5e5de2 0%,#4342a0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5e5de2', endColorstr='#4342a0',GradientType=1 );
     padding: $reg-space 0.25rem;
 }
 

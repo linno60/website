@@ -1,6 +1,5 @@
 <?php get_header() ?>
 <?php the_post() ?>
-
 <article itemscope itemtype="http://schema.org/TechArticle">
     <header>
         <div class="width-container">

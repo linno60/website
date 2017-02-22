@@ -1,4 +1,4 @@
-<article class="index-article" itemscope itemtype="http://schema.org/TechArticle">
+<article class="index-article section" itemscope itemtype="http://schema.org/TechArticle">
     <h2 itemprop="headline">
         <a href="<?php the_permalink() ?>" class="dont-print-url" itemprop="url">
             <?php the_title() ?>

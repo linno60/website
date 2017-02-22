@@ -11,7 +11,7 @@
         <?php else: ?>
             <meta name="viewport" content="width=device-width,initial-scale=1">
             <link rel="amphtml" href="<?php echo get_amp_url() ?>">
-            <link rel="stylesheet" href="<?php echo get_asset_url('theme', 15, 'css') ?>">
+            <link rel="stylesheet" href="<?php echo get_asset_url('theme', 16, 'css') ?>">
         <?php endif; ?>
         <?php wp_head() ?>
         <?php insert_template('favicons') ?>

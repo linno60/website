@@ -1,4 +1,3 @@
-        </div>
         <footer>
             <?php insert_template('menu') ?>
             <div class="hosting-referral">Proudly hosted with <a href="http://www.panthur.com.au/members/aff.php?aff=318">Panthur</a>.</div>

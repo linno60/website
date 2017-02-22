@@ -91,6 +91,10 @@ h1 a:hover {
     color: $accent;
 }
 
+article header h1 a:hover {
+    color: #f1f1f1;
+}
+
 h1 {
     margin: 0 0 $reg-space;
 }
@@ -110,6 +114,16 @@ h6 {
 main,
 article {
     margin: $lrg-space 0;
+}
+
+article header {
+    background: #2f2e70;
+    background: -moz-linear-gradient(-45deg, #2f2e70 0%, #4342a0 100%);
+    background: -webkit-linear-gradient(-45deg, #2f2e70 0%,#4342a0 100%);
+    background: linear-gradient(135deg, #2f2e70 0%,#4342a0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2f2e70', endColorstr='#4342a0',GradientType=1 );
+    padding: $lrg-space 0;
+    color: #fff;
 }
 
 time {
@@ -224,7 +238,13 @@ footer {
     width: 750px;
     max-width: 100%;
     padding: 0 $sml-space;
-    margin: $lrg-space auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section {
+    margin-top: $lrg-space;
+    margin-bottom: $lrg-space;
 }
 
 nav ul {

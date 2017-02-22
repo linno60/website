@@ -17,4 +17,3 @@
         <?php insert_template('favicons') ?>
     </head>
     <body>
-        <div class="width-container">

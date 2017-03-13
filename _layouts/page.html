@@ -1,0 +1,10 @@
+---
+layout: default
+---
+<main itemscope itemtype="http://schema.org/WebPage">
+    {% include page_title.html %}
+    <div itemprop="mainContentOfPage" itemscope itemtype="http://schema.org/WebPageElement">
+        <div class="width-container section" itemprop="text">{{ content }}</div>
+    </div>
+    {% include profile.html %}
+</main>

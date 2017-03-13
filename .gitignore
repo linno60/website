@@ -1,2 +1,4 @@
-git-pull.php
-npm-debug.log
+_site
+.sass-cache
+.jekyll-metadata
+_build/node_modules

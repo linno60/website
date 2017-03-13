@@ -1,0 +1,11 @@
+---
+layout: default
+---
+{% assign post = page %}
+<article itemscope itemtype="http://schema.org/TechArticle">
+    {% include page_title.html %}
+    <div class="width-container" itemprop="articleBody" itemprop="mainContentOfPage">
+        {{ content }}
+    </div>
+    {% include profile.html %}
+</article>

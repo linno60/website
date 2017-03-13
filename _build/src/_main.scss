@@ -117,12 +117,17 @@ h6 {
 
 article header,
 main header {
-    background: $accent;
-    background: -moz-linear-gradient(-45deg, $accent-light 0%, $accent 100%);
-    background: -webkit-linear-gradient(-45deg, $accent-light 0%,$accent 100%);
-    background: linear-gradient(135deg, $accent-light 0%,$accent 100%);
     padding: $lrg-space 0;
     color: #fff;
+}
+
+article header,
+main header,
+footer {
+background: $accent;
+    background: -moz-linear-gradient(-45deg, $compliment 0%, $accent 100%);
+    background: -webkit-linear-gradient(-45deg, $compliment 0%,$accent 100%);
+    background: linear-gradient(135deg, $compliment 0%,$accent 100%);
 }
 
 time {
@@ -177,7 +182,6 @@ blockquote :last-child {
 
 footer {
     text-align: center;
-    background: $accent;
     padding: $reg-space 0.25rem;
 }
 
@@ -197,6 +201,12 @@ footer {
 
 .profile {
     text-align: center;
+}
+
+aside.profile {
+    background: #f0eff6;
+    padding: $reg-space 0;
+    margin-bottom: 0;
 }
 
 .profile .name {

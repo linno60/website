@@ -1,5 +1,13 @@
-<h1 itemprop="headline">
-    <a href="{{ page.url }}" class="dont-print-url" itemprop="url">
-        {{ page.title }}
-    </a>
-</h1>
+<header>
+    <div class="width-container">
+        <h1 itemprop="headline">
+            <a href="{{ page.url }}" class="dont-print-url" itemprop="url">
+                {{ page.title }}
+            </a>
+        </h1>
+        <time datetime="{{ post.date | date: '%Y-%m-%dT%H:%M:%SL' }}" itemprop="datePublished">
+            {{ post.date | date: '%B %d, %Y' }}
+        </time>
+        <div itemprop="description">{{ page.excerpt }}</div>
+    </div>
+</header>

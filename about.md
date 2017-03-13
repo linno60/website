@@ -2,9 +2,8 @@
 layout: page
 title: About
 permalink: /about/
+excerpt: Hey! I’m Tim MacDonald, a local software developer based in regional New South Wales, Australia in the Riverina (Wagga Wagga).
 ---
-
-Hey! I’m Tim MacDonald, a local software developer based in regional New South Wales, Australia in little old [Wagga’ville](https://goo.gl/maps/QX8UeDt9ty92).
 
 For several years I ran a corporate web development business, but in the last 12 months I’ve broken out of the world of corporate website development using platforms like WordPress and have embraced frameworks like Laravel to produce web based apps. I also enjoy writing native iOS and Android apps that interact with the web apps I build.
 

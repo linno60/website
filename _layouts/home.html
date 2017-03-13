@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-<header class="profile main-profile" itemscope itemtype="http://schema.org/Person">
+<header class="section profile main-profile" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="alternateName" content="TiMacDonald">
     <meta itemprop="sameAs" content="{{ site.twitter_url }}">
     <a href="{{ site.url }}">
@@ -19,13 +19,12 @@ layout: default
 </header>
 <main>
     {% for post in site.posts %}
-        <article class="index-article" itemscope itemtype="http://schema.org/TechArticle">
+        <article class="index-article section width-container" itemscope itemtype="http://schema.org/TechArticle">
             <h2 itemprop="headline">
                 <a href="{{ post.url }}" class="dont-print-url" itemprop="url">
                     {{ post.title }}
                 </a>
             </h2>
-            {% include post_date.html %}
             <div itemprop="description">{{ post.excerpt }}</div>
         </article>
     {% endfor %}

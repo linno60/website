@@ -3,9 +3,6 @@ layout: post
 title:  "Fluent Validation Rules for Laravel"
 date:   2016-12-31 23:58:00 +1100
 excerpt: "Laravel validation rules are great, but wouldn't it be awesome if there was a fluent interface for ALL the rules. Well, that's what I've put together. If you love chaining methods, and dig Laravel validation, you'll enjoy this fluent validation package."
-update:
-    content: "I’ve moved this into its own repository and have submitted it to Packagist so it can easily be added to your project. I’ve also updated the code snippets and links in the post to reflect the independent package."
-    date: 2016-01-03 10:12:00 +1100
 ---
 
 ## What is Data Validation

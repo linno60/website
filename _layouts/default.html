@@ -9,7 +9,7 @@
             <title>{{ site.title }} &middot; {{ site.description }}</title>
             <meta name="description" content="{{ site.description }}">
         {% endif %}
-        <link rel="canonical" href="{{site.url + page.url}}" />
+        <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
@@ -19,12 +19,10 @@
         <link rel="shortcut icon" href="/assets/img/favicon.ico">
         <meta name="msapplication-config" content="/assets/data/browserconfig.xml">
         <meta name="theme-color" content="#4342a0">
-        <link rel="stylesheet" href="/assets/css/main.css">
+        <link rel="stylesheet" href="/assets/css/app.css">
     </head>
     <body>
-        <div class="width-container">
-            {{ content }}
-        </div>
+        {{ content }}
         <footer class="dont-print">
             <nav>
                 <ul>
@@ -45,7 +43,10 @@
                     </li>
                 </ul>
             </nav>
+            <div class="hosting-referral">
+                Proudly hosted with <a href="http://www.panthur.com.au/members/aff.php?aff=318">Panthur</a>.
+            </div>
         </footer>
-        <script async src="/assets/js/main.js"></script>
+        <script async src="/assets/js/app.js"></script>
     </body>
 </html>

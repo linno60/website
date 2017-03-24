@@ -23,10 +23,15 @@ github_url: https://github.com/timacdonald
 linkedin_url: https://au.linkedin.com/in/timacdonaldau
 
 # Build settings
-destination: ../public_html
+destination: ../../public_html
 markdown: kramdown
 gems:
   - jekyll-feed
 exclude:
   - Gemfile
   - Gemfile.lock
+  - webpack.mix.js
+  - webpack.config.js
+  - package.json
+  - mix-manifest.json
+  - node_modules

@@ -23,7 +23,7 @@ github_url: https://github.com/timacdonald
 linkedin_url: https://au.linkedin.com/in/timacdonaldau
 
 # Build settings
-destination: ../../public_html
+destination: ../public_html
 markdown: kramdown
 gems:
   - jekyll-feed

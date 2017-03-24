@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="http://jekyllrb.com" version="3.4.1">Jekyll</generator><link href="https://timacdonald.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://timacdonald.me/" rel="alternate" type="text/html" /><updated>2017-03-24T16:45:30+11:00</updated><id>https://timacdonald.me/</id><title type="html">Tim MacDonald</title><subtitle>Software developer, musican and native plant enthusiast.</subtitle><entry><title type="html">Fluent Validation Rules for Laravel</title><link href="https://timacdonald.me/fluent-validation-rules-for-laravel/" rel="alternate" type="text/html" title="Fluent Validation Rules for Laravel" /><published>2016-12-31T23:58:00+11:00</published><updated>2016-12-31T23:58:00+11:00</updated><id>https://timacdonald.me/fluent-validation-rules-for-laravel</id><content type="html" xml:base="https://timacdonald.me/fluent-validation-rules-for-laravel/">&lt;h2 id=&quot;what-is-data-validation&quot;&gt;What is Data Validation&lt;/h2&gt;
+
+&lt;p&gt;Applications (both web and native) are continually receiving input from users that it can then perform actions upon. Whether you are sending a post to Facebook, that Facebook then saves to a database and presents to other users, or sending your credit card details to PayPal, all this input needs to be validated to ensure it is in a format that the application can handle. If you send through a credit card number to PayPal containing only letters, PayPal shouldn’t try and save those details, instead the input would not pass validation and they would let the user know they need to try again and (hopefully) provide the user with information about what actually went wrong. PayPal has just checked your input, that’s validation! Performing validation ensures data consistency and is also very important for security reasons.&lt;/p&gt;
+
+&lt;p&gt;For a working example, let’s say we are allowing a user to login and we have the following requirements for the input:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Must be a valid email address, i.e. tim@example.com&lt;/li&gt;
+      &lt;li&gt;Must be a maximum length of 255 characters (a database restriction we have implemented)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Name&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Must be provided&lt;/li&gt;
+      &lt;li&gt;Must be at least 2 characters in length&lt;/li&gt;
+      &lt;li&gt;Must be a maximum of 255 characters (same as above)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;using-laravel-validation&quot;&gt;Using Laravel Validation&lt;/h2&gt;
+
+&lt;p&gt;In order to use the validation workflow’s provided by Laravel, we basically just need to build up an array of rules. These rules can then be validated in many different ways, which you can read more about in the documentation. Here is what the most basic array would look like for our working example.&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$rules&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;s1&quot;&gt;'email'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'required|email|max:255'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s1&quot;&gt;'name'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'required|min:2|max:255'&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;As you can see, each rule is separated by the pipe &lt;code class=&quot;highlighter-rouge&quot;&gt;|&lt;/code&gt; character. Most of the time I’m working with rather simple validation logic like this, and the above example is pretty straightforward to understand and read, which is always important. Once you have your rules mapped out like this, you can pass them to a validator to determine if the data passes or fails and perform actions based on the outcome. The validator will also provide you with error messages, or you can specify custom messages, but you should read up on that over at the docs, they are fantastic!&lt;/p&gt;
+
+&lt;h2 id=&quot;rule-builder&quot;&gt;Rule Builder&lt;/h2&gt;
+
+&lt;p&gt;To make the creation of validation rules even more readable, I’ve develop a &lt;em&gt;rule builder&lt;/em&gt;. The builder utilises a fluent interface that helps to make the code more expressive and gets rid of the pipe separated string syntax. Laravel as a whole has a large focus on the feel of the framework API and utilises the fluent interface for lots of things throughout the codebase. It actually already has a fluent rule builder for some more complex rules, but more on that shortly.&lt;/p&gt;
+
+&lt;p&gt;Now instead of concatenating all these rules with the pipe character, we can simply call method names that correspond with the rules and pass in the arguments.&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TiMacDonald\Rule\Builder&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Rule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$rules&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+
+    &lt;span class=&quot;s1&quot;&gt;'email'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                   &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;email&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                   &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                   &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+
+    &lt;span class=&quot;s1&quot;&gt;'name'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;required&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// var_dump($rules);
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;email&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;required|email|max:255&quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;required|min:2|max:255&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;bonus-points&quot;&gt;Bonus Points&lt;/h3&gt;
+
+&lt;p&gt;For the sake of readability, it is also possible to prefix method calls with &lt;code class=&quot;highlighter-rouge&quot;&gt;is&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;allowed&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;has&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;matches&lt;/code&gt; interchangeably. These can also be modified by extending the class. So now we can utilise these even more expressive method names. It is also possible with the basic validation rules to provide options as either seperate arguments or as a single array, to suit your preferred approach. For the sake of example, I’ll extend our validation requirements on this one to include a profile and banner image. Doubling up with the image/mimes validation here, but it is just to demonstrate the available flexibility. You’ll see in the profile image mimes are passed in as seperate arguments, but the banner image mimes are passed in as a single array, both are perfectly valid working versions.&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TiMacDonald\Rule\Builder&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Rule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$rules&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+
+    &lt;span class=&quot;s1&quot;&gt;'email'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isRequired&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                   &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isEmail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                   &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hasMax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                   &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+
+    &lt;span class=&quot;s1&quot;&gt;'name'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isRequired&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hasMin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hasMax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+
+    &lt;span class=&quot;s1&quot;&gt;'profile_image'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                           &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;allowedMimes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'png'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'jpeg'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                           &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+
+    &lt;span class=&quot;s1&quot;&gt;'banner_image'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                          &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;allowedMimes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'png'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'jpeg'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+                          &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// var_dump($rules);
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;email&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;required|email|max:255&quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;required|min:2|max:255&quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;profile_image&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;image|mimes:png,jpeg&quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;banner_image&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;image|mimes:png,jpeg&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;built-in-rule-class&quot;&gt;Built in Rule Class&lt;/h2&gt;
+
+&lt;p&gt;As I mentioned earlier, Laravel actually comes with some built in classes for building validation rules, however it only allows for the creation of the &lt;code class=&quot;highlighter-rouge&quot;&gt;dimensions&lt;/code&gt;,  &lt;code class=&quot;highlighter-rouge&quot;&gt;exists&lt;/code&gt;,  &lt;code class=&quot;highlighter-rouge&quot;&gt;in&lt;/code&gt;,  &lt;code class=&quot;highlighter-rouge&quot;&gt;not_in&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;unique&lt;/code&gt; rules. I’d hate to reinvent the wheel, so I incorporated them into this builder and calls to these rules are proxied internally to the built in validation rules on the fly. One thing to keep in mind is that the built in rules have additional methods of their own for building up the validation logic, so you must call any methods on a built in rule directly after the initial call to it. As a example, let’s say we want to ensure that the user’s email is &lt;em&gt;unique&lt;/em&gt; in the database, but we want to ignore a specific users id. Easy, let’s make some magic…&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;TiMacDonald\Rule\Builder&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Rule&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;...&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$rules&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+
+    &lt;span class=&quot;s1&quot;&gt;'email'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isRequired&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                   &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isUnique&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'users'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ignore&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$user&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                   &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isEmail&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                   &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hasMax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                   &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt;
+
+    &lt;span class=&quot;s1&quot;&gt;'name'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Rule&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isRequired&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hasMin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;hasMax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                  &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// var_dump($rules);
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;email&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;required|email|max:255|unique:users,NULL,7,id&quot;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nx&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;required|min:2|max:255&quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Here you can see the built in &lt;code class=&quot;highlighter-rouge&quot;&gt;unique&lt;/code&gt; rule with a following &lt;code class=&quot;highlighter-rouge&quot;&gt;ignore&lt;/code&gt; method call on it. This ignore method is delegated to the ignore rule and so are any following method calls until another rule is encountered, in this case &lt;code class=&quot;highlighter-rouge&quot;&gt;isEmail&lt;/code&gt; is the next encountered rule. Nice, right?&lt;/p&gt;
+
+&lt;h2 id=&quot;performance-hit&quot;&gt;Performance Hit&lt;/h2&gt;
+
+&lt;p&gt;I’m no performance guru in any way, however wrapping this all up will undoubtably create some overhead, however minimal. There are things that can be done to improve performance, which I might get to one day like specifying specific methods for each rule rather than allowing multiple method prefixes for each rule. Keep this in mind, but I’d say with something like the above example the overhead is going to be pretty minimal.&lt;/p&gt;
+
+&lt;h2 id=&quot;stolen&quot;&gt;Stolen!&lt;/h2&gt;
+
+&lt;p&gt;Validation is a pretty common thing and I’ve often thought of doing something like this (as I’m sure many Laravel developers have), but it wasn’t until I heard North Meets South podcast mention that someone should do the rest of the rules (very briefly in passing) that I decided I’d give it a go. So yea, I stole the idea really :) I’ve also seen, after some initial Googling around the idea, that there is another project (on GitHub?) similar to this that encapsulates a lot more of the validation process into it, but I can’t track it down now! If I track it down or someone else does, let me know, and I will definitely update this post and link to it. I wanted this to be a basic rule builder that just replaces the pipe concatenation process, which I think it does very nicely.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-wrap&quot;&gt;The Wrap&lt;/h2&gt;
+
+&lt;p&gt;If you wanna utilise the rule builder, you can checkout the repo on GitHub, but this was more of a proof of concept and a bit of an exercise for myself than anything else, but is a fully valid working example. The plain string validation syntax is easy to create and reads pretty well as it is, but this just codifies the process of creating the syntax. It isn’t in its own package as it’s just a little feature of my base setup for Laravel projects and wasn’t real sure if there would be any interest. If there is any interest I’d be happy to check it into into its own repo. Happy for any feedback, code reviews or comments that can help improve it.&lt;/p&gt;
+
+&lt;h2 id=&quot;links&quot;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/timacdonald/rule-builder&quot;&gt;Repo on GitHub&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://martinfowler.com/bliki/FluentInterface.html&quot;&gt;The Fluent Interface&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://laravel.com/docs/master/validation&quot;&gt;Laravel documentation&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.northmeetssouth.audio/&quot;&gt;North Meets South Podcast&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://laracasts.com/series/whats-new-in-laravel-5-3/episodes/18&quot;&gt;Learn the built in Laravel rules on Laracasts&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">Laravel validation rules are great, but wouldn't it be awesome if there was a fluent interface for ALL the rules. Well, that's what I've put together. If you love chaining methods, and dig Laravel validation, you'll enjoy this fluent validation package.</summary></entry><entry><title type="html">Being a Developer in Regional Australia</title><link href="https://timacdonald.me/being-a-developer-in-regional-australia/" rel="alternate" type="text/html" title="Being a Developer in Regional Australia" /><published>2016-12-30T14:49:00+11:00</published><updated>2016-12-30T14:49:00+11:00</updated><id>https://timacdonald.me/being-a-developer-in-regional-australia</id><content type="html" xml:base="https://timacdonald.me/being-a-developer-in-regional-australia/">&lt;p&gt;Finding a community of like-minded people to interact with is important for everyone. Whether you are a car enthusiast, Pokemon card collector, Xbox’r or a software developer, a community gives us an outlet to meet new people, discuss topics, come up with new ideas, but most importantly, for me, to learn from others. People start clubs, get jobs that align with their interests or have friends in the same circles, but as you move more regional, it becomes harder and harder to find that niche community.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;But Tim, you’re a software developer…computers and the Internet are your jam – the community is available online 24/7!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I’ve jumped into the online community, joined Twitter and followed a bunch of people who are influential in my areas of interest, that’s the easy part. But who can I hit up to checkout a repo I’ve created, or a feature I’m thinking about adding to X project? Human interaction IRL is second to none even for us coding nerds sitting in the corner of a dark room with our terminal open, hissing at people as they walk past. It’s how you meet people in other locations that you then can communicate with online, but now you know who this person is and you have some context for conversation.&lt;/p&gt;
+
+&lt;p&gt;I also feel that meeting someone and having a discussions with them can break down barriers and alleviate that imposter syndrome that we all get. When scrolling through Twitter, or reading some blog posts, you can feel it creeping up on you and all of a sudden you’re thinking: &lt;em&gt;wow, I’m not even going to be able to say something half intelligent to this person, they have obviously been developing for roughly 293, 389 years and know everything there is to know…and now I must start learning everything all over again&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;For a while I looked for local communities in the software realm, but couldn’t find anything. I started looking more metro and found some established communities in Sydney and Melbourne, which lucky for me I’m between so I can easily travel to be apart of them. But it got me thinking, there has to be other’s out there nearby with a similar problem. Now, no doubt it’s going to be a handful of people, but still we can to get together and build a tight nit community. I know there are a stack load of web development businesses in Wagga Wagga alone, so I hope we can all come together, ditch that imposter syndrome and discuss our interests!&lt;/p&gt;
+
+&lt;p&gt;Having never seen the movie, I’ll use the quote anyway: &lt;em&gt;if you build it, they will come&lt;/em&gt;. I encourage all and anyone interested in web, software, tools, services, whatever it is related to tech to join &lt;a href=&quot;https://www.meetup.com/en-AU/Wagga-Developer-Meetup/&quot;&gt;our developer meetup&lt;/a&gt;. I specialise in PHP, but I want to interact with that Python developer or that web ops ninja! I also encourage others in far reaching remote areas to start your own meetup, just make is happen! The Meetups website makes it really easy to get off the ground and with a small amount of sponsorship from a local business, you won’t even need to worry about costs.&lt;/p&gt;
+
+&lt;p&gt;At the time or writing this we only have 7 members and are yet to have our first meetup, but I am looking forward to 2017 and getting this thing off the ground. I’ve got no idea what we’re going to do, but we’ll all work it out together as we go. If you have any ideas for the meetup please join up and let us know, we’d love to get people local and metro to give talks and be apart of our community. Hit me up on &lt;a href=&quot;https://twitter.com/timacdonald87&quot;&gt;Twitter&lt;/a&gt; if you wanted to discuss the meetup without joining the page.&lt;/p&gt;</content><author><name></name></author><summary type="html">If you're in the Riverina and wanna meetup to discuss all things software - join our local developer meetup.</summary></entry></feed>

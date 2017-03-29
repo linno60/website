@@ -30,6 +30,7 @@ destination: ../public_html
 markdown: kramdown
 include:
   - .error-pages
+  - .htaccess
 exclude:
   - Gemfile
   - Gemfile.lock

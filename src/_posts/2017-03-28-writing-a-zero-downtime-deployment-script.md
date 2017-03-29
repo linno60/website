@@ -241,8 +241,9 @@ And that's a wrap on my goal - *Nailed It*! This is really just an exercise for 
 
 ## Notes
 
+- For my purpose this is zero downtime, however I'm not 100% it's an atomic swap. You should really just use Envoyer for any serious production stuff, this is just a toy.
 - This is working for my setup, but different servers might have different setups and the code may not execute as expected. I'm running these commands on my development Mac. I'm not expecting this to 'just work' for you, but hopefully in following along you learnt some things, I know I did!
-- The script does not currently clean up after itself i.e. after many deploys you may start to fill up your web server. For now you will want to manually clear out old deploys from the deploy directory. In the future I might add a cleanup script to remove the older deploys...or you could just use [Envoyer](https://envoyer.io).
+- The script does not currently clean up after itself i.e. after many deploys you may start to fill up your web server. For now you will want to manually clear out old deploys from the deploy directory. In the future I might add a cleanup script to remove the older deploys...or you could just use Envoyer.
 - I've just worked this out through trial and error. Dig into shell scripting, it's a different world and good fun experimenting with - makes you feel like a programming guru at the cafe as well 🤓.
 - If you are running something like Laravel and wish to run any additional command, such as `composer`, `artisan` or `npm` commands, you can slot them in before the symbolic link is made, but make sure it's not AFTER the link is made, otherwise our Zero Downtime is gone e.g.
 

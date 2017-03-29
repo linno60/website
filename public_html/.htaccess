@@ -5,7 +5,7 @@ Redirect 301 /blog/category/blog/ https://timacdonald.me/
 # Google search console is finding these for some reason.
 Redirect 301 /mobile/ https://timacdonald.me/
 Redirect 301 /m/ https://timacdonald.me/
-Redirect 301 /blog/fluent-va%E2%80%A6 https://timacdonald.me/
+Redirect 301 /blog/fluent-va… https://timacdonald.me/
 
 # Apache Server Configs v2.14.0 | MIT License | https://github.com/h5bp/server-configs-apache
 # The following is based on the above but has been customised.

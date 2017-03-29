@@ -28,6 +28,8 @@ asset_version: 290327
 # Build settings
 destination: ../public_html
 markdown: kramdown
+include:
+  - .error-pages
 exclude:
   - Gemfile
   - Gemfile.lock

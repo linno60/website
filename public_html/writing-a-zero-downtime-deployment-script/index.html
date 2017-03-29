@@ -248,7 +248,7 @@ ln -s -n -f <span class="nv">$DEPLOYMENT_DIRECTORY</span>/<span class="nv">$REPO
 <span class="c"># The -tt flag will mean that the scripts output will be returned to our console</span>
 <span class="c">#   so we can see if it was successful, otherwise we don't get the console output.</span>
 <span class="c"># The script provided in the heredoc will be executed on the remote server</span>
-ssh timacdonald -tt <span class="sh">&lt;&lt;REMOTE_SCRIPT
+ssh -tt timacdonald <span class="sh">&lt;&lt;REMOTE_SCRIPT
 mkdir -p $DEPLOYMENT_DIRECTORY
 git clone $GIT_REPOSITORY $DEPLOYMENT_DIRECTORY
 ln -s -n -f $DEPLOYMENT_DIRECTORY/$REPOSITORY_PUBLIC_DIRECTORY_PATH $SERVER_PUBLIC_DIRECTORY_PATH

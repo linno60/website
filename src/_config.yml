@@ -21,7 +21,7 @@ permalink: /:title/
 twitter_url: https://twitter.com/timacdonald87
 github_url: https://github.com/timacdonald
 linkedin_url: https://au.linkedin.com/in/timacdonaldau
-asset_version: 170327
+asset_version: 290327
 
 # Build settings
 destination: ../public_html

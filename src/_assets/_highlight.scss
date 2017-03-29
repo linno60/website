@@ -1,4 +1,4 @@
-.highlight { padding: 2rem; background: #f0eff6; border-radius: 3px; overflow-x: scroll;}
+.highlight { box-shadow: inset 0 0 0 1px $background; text-shadow: 0 1px 0 $background; border: 1px solid $dark-grey; padding: $sml-space; background: $grey; border-radius: 3px; overflow-x: scroll; font-size: 0.75rem;}
 .highlight .hll { background-color: #ffffcc }
 .highlight .c { color: #aaaaaa; font-style: italic } /* Comment */
 .highlight .err { color: #F00000; background-color: #F0A0A0 } /* Error */

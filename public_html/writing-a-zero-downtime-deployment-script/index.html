@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en-au">
+    <head>
+        <meta charset="utf-8">
+        
+            <title>Writing a Zero Downtime Deployment Script &middot; Tim MacDonald</title>
+            <meta name="description" content="Having never written a shell script before, I thought I'd try and level up by writing a simple deployment script for my website and my clients websites. The outcome: FlipIt™">
+        
+        <meta name="google-site-verification" content="iCKi0Ly3F3YRL_RJ_RImfZCyQjso8mWzwmsqg__7u4U">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="canonical" href="https://timacdonald.me/writing-a-zero-downtime-deployment-script/">
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16x16.png">
+        <link rel="manifest" href="/assets/data/manifest.json">
+        <link rel="mask-icon" color="#4342a0" href="/assets/img/safari-pinned-tab.svg">
+        <link rel="shortcut icon" href="/assets/img/favicon.ico">
+        <meta name="msapplication-config" content="/assets/data/browserconfig.xml">
+        <meta name="theme-color" content="#4342a0">
+        <link rel="stylesheet" href="/assets/css/app.290327.css">
+    </head>
+    <body>
+        
+<article itemscope itemtype="http://schema.org/TechArticle">
+    <header>
+    <div class="width-container">
+        <h1 itemprop="headline">
+            <a href="/writing-a-zero-downtime-deployment-script/" class="dont-print-url" itemprop="url">
+                Writing a Zero Downtime Deployment Script
+            </a>
+        </h1>
+        <time datetime="2017-03-28T12:00:00L" itemprop="datePublished">
+            March 28, 2017
+        </time>
+        <div itemprop="description">Having never written a shell script before, I thought I'd try and level up by writing a simple deployment script for my website and my clients websites. The outcome: FlipIt™</div>
+    </div>
+</header>
+    <div class="width-container" itemprop="articleBody" itemprop="mainContentOfPage">
+        <p>Over the past year I’ve become more and more familiar with the terminal and (a limited set of) the commands that are possible. Swapping out GitHub Desktop app for the Git terminal commands and learning about moving around, manipuating files, VIM (read: I use Nano ) and other possibilities in this new world, I was now ready to tackle something new: writing a shell script.</p>
+
+<p>What originally drew my attention to doing some shell scripting was hearing that Adam Wathan of <a href="http://www.fullstackradio.com">Full Stack Radio</a> originally wrote <a href="https://nitpick-ci.com">Nitpick CI</a>, his PSR-2 coding standard app, in PHP but later converted it to shell scripts. I thought: <em>“Dang! I should check out some shell scripts and learn when they come in handy”</em>.</p>
+
+<p>After putting in a bit of Googl’ing and Stack Overflow’ing, I’ve hit the nail on the head and got my simple script running. Pretty stoked!</p>
+
+<h2 id="zero-downtime-deployment">Zero Downtime Deployment</h2>
+
+<p>Something that has been bugging me recently is my website deployment setup for myself and my clients. I want to be able to run a single command to retrieve the new site from the Git respository and then run any composer commands or additional shell commands neccessary (e.g. compiling assets with Laravel Mix).</p>
+
+<p>The problem with running these commands after deploying from a repository is that it all takes time, and it means that for however long all these commands take to run, the site is in an incomplete state for any requests that come through.</p>
+
+<p>Enter: <strong>Zero Downtime Deployments</strong></p>
+
+<p>The idea here is that you can run all these commands and while they are running the previous site is still active. Once the commands have finished running and the new version of the site is ready for visitors, the site delivered to the user is switched out seamlessly with the new one.</p>
+
+<p>There are plenty of tools out there to do this for you. Check out <a href="https://envoyer.io">Envoyer</a>. But what developer ever thought: <em>“Hey it exists so I don’t have to build it myself”</em> …right?!?</p>
+
+<h2 id="flipit-commands">FlipIt™ Commands</h2>
+
+<p>Yes…I named it 😎</p>
+
+<h3 id="creating-a-deployment-directory">Creating a Deployment Directory</h3>
+
+<p>The first step is to create a directory in which the fresh git respoitory will be cloned into. I used to just use <code class="highlighter-rouge">git pull</code> command, but this meant that there would be some downtime. Ain’t nobody got time for dat.</p>
+
+<p>From the server root we will create the directory structure <code class="highlighter-rouge">flipit/deploys/UNIX_TIME</code>. <a href="https://en.wikipedia.org/wiki/Unix_time">Unix time</a> is simply the seconds since midnight 1970. This structure will mean that each time we create a new deployment directory this number will be different and we will be able to determine the order of the directories easily.</p>
+
+<p>To create this directory structure, we need to run the following shell commands:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># Create a variable to store the unix time.</span>
+<span class="c"># As 'date +%s' itself is a command, we need to tell the system to interpret it</span>
+<span class="c">#   as a command and not simply a string. To do this we can wrap the command in</span>
+<span class="c">#   parenthesis and prepend it with the '$' sign, e.g. $(COMMAND_HERE).</span>
+<span class="nv">UNIX_TIME</span><span class="o">=</span><span class="k">$(</span>date +%s<span class="k">)</span>
+
+<span class="c"># Create a variable and store the path to this new deployment, we'll need it</span>
+<span class="c">#   later.</span>
+<span class="nv">DEPLOYMENT_DIRECTORY</span><span class="o">=</span>./flipit/deploys/<span class="nv">$UNIX_TIME</span>
+
+<span class="c"># Make the directory. To learn more type 'man mkdir'.</span>
+<span class="c"># The -p flag tells the system to also create any intermediate directories.</span>
+<span class="c"># To utilise our 'DEPLOYMENT_DIRECTORY' variable we append the '$' sign.</span>
+mkdir -p <span class="nv">$DEPLOYMENT_DIRECTORY</span>
+</code></pre>
+</div>
+
+<p>If at any point you want to trouble shoot and check the value of the variables you create, you can output their value by using the <code class="highlighter-rouge">echo</code> command, e.g. <code class="highlighter-rouge">echo $DEPLOYMENT_DIRECTORY</code>. Also, if any of these commands are confusing, or you’d like to know more about them, you can bring up the manual by typing <code class="highlighter-rouge">man COMMAND_HERE</code>, e.g. to learn more about the <code class="highlighter-rouge">mkdir</code> command type <code class="highlighter-rouge">man mkdir</code>.</p>
+
+<p><strong>Pro Tip:</strong> if you’re all 😱 and can’t get out of the manual, type <code class="highlighter-rouge">q</code> to exit the manual! Took me a few tries to work that one out 👍.</p>
+
+<p>So now we have our directory ready to roll. We are killing it! 🙏</p>
+
+<h3 id="cloning-our-repository-to-our-deployment-directory">Cloning Our Repository to Our Deployment Directory</h3>
+
+<p>If you’ve been working with Git for a while, this step is what you’ve probably done a thousand times before. We are going to get our system to clone our respository from GitHub into our deployment directory, rather than just using <code class="highlighter-rouge">git pull</code> into the existing cloned respository, which is usually live…and would cause downtime…but I regress.</p>
+
+<p><strong>Note:</strong> You will need to have setup SSH keys for this to work seamlessly. Github have a <a href="https://help.github.com/articles/connecting-to-github-with-ssh/">help section</a> to guide you through the setup process. When I was new to all this, I didn’t really get SSH keys, but having spent a bit of time working it all out, it’s a great help and makes things so much easier.</p>
+
+<p>To make this magic happen, we will first need to get the repository URL from GitHub:</p>
+
+<p><img src="/assets/img/posts/github-repository-url.png" alt="GitHub repository URL" /></p>
+
+<p>and then run the following shell commands:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># Create our repository variable.</span>
+<span class="c"># You should of course clone your repo...not mine.</span>
+<span class="nv">GIT_REPOSITORY</span><span class="o">=</span>git@github.com:timacdonald/website.git
+
+<span class="c"># Clone our respository and pass the deployment directory as the destination</span>
+<span class="c">#   in which to store the repository.</span>
+git clone <span class="nv">$GIT_REPOSITORY</span> <span class="nv">$DEPLOYMENT_DIRECTORY</span>
+</code></pre>
+</div>
+
+<p>Once this has run, we now have our fresh respository waiting for us in our deployment directory. Navigate into the folder to check it out. It is finally time to FlipIt™!</p>
+
+<h3 id="switch-out-the-current-site-instantly">Switch Out the Current Site, Instantly!</h3>
+
+<p>This step is basically just creating a shortcut, just like you would on your computer when you might create a shortcut on your desktop to an application you use, or a file you are constantly editing. We are going to tell the system to create a shortcut from our public directory to our deployment directory. Switching this shortcut is what gives us the <em>zero downtime</em>.</p>
+
+<p>Now in my repository I have a <code class="highlighter-rouge">public_html</code> directory which has my current site ready for deployement. If this was a <a href="http://laravel.com">Laravel</a> installation, my preferred framework of choice, the repositories public directory would simply be <code class="highlighter-rouge">public</code>.</p>
+
+<p>I’m running my site on <a href="http://www.panthur.com.au/members/aff.php?aff=318">shared hosting</a> that’s located in Sydney, Australia (sorry for the response times international visitors, not sorry) that has a few restrictions (as shared hosting tends to do), which means that I’m building my site on my development machine and keeping the current working files in the Git. I’ll probably work on this and get it setup so I can run all the build and asset compilation steps as a part of this script, but let’s take it <a href="https://www.youtube.com/watch?v=ws-_syszg84">one piece at a time</a>. My server has a <code class="highlighter-rouge">public_html</code> directory, which is the public area of the server. Some servers might have a <code class="highlighter-rouge">www</code> directory or a <code class="highlighter-rouge">public</code> directory, or something similar.</p>
+
+<p>So, what does that all mean. That means that I am going to link my servers <code class="highlighter-rouge">public_html</code> directory to my repositories <code class="highlighter-rouge">public_html</code>. Make sure you’re sitting down, let’s make some magic:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># Create my servers 'public' directory variable.</span>
+<span class="c"># You can change this to whatever your server provides.</span>
+<span class="nv">SERVER_PUBLIC_DIRECTORY_PATH</span><span class="o">=</span>public_html
+
+<span class="c"># Create my repository 'public' directory variable.</span>
+<span class="c"># For a Laravel installation, swap 'public_html' with 'public'.</span>
+<span class="nv">REPOSITORY_PUBLIC_DIRECTORY_PATH</span><span class="o">=</span>public_html
+
+<span class="c"># Make a link...oh I mean FlipIt™</span>
+<span class="c"># The -s flag tells the system to make a [symbolic link](https://en.wikipedia.org/wiki/Symbolic_link). This is important</span>
+<span class="c">#   and also very handy for a lot of things. If you've ever used [Laravel Valet](https://laravel.com/docs/5.4/valet)</span>
+<span class="c">#   before, you've been creating symbolic links! Well worth investigating.</span>
+<span class="c"># The -h flag tells the system not to follow any symbolic links. This was doing</span>
+<span class="c">#   my head in I ended up with ./public_html/public_html links! Inception!</span>
+<span class="c"># the -f flag tells the system that if a link already exists, remove it and add</span>
+<span class="c">#   this link instead.</span>
+ln -s -n -f <span class="nv">$DEPLOYMENT_DIRECTORY</span>/<span class="nv">$REPOSITORY_PUBLIC_DIRECTORY_PATH</span> <span class="nv">$SERVER_PUBLIC_DIRECTORY_PATH</span>
+</code></pre>
+</div>
+
+<p>Now our servers <code class="highlighter-rouge">public_html</code> directory is ACTUALLY a shortcut to our repositories <code class="highlighter-rouge">public_html</code> directory.</p>
+
+<p>✨ <strong>MAGICAL</strong> 🦄</p>
+
+<p>Let’s wrap that all up together now.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># You should change these variables to suit your setup...</span>
+<span class="nv">SERVER_PUBLIC_DIRECTORY_PATH</span><span class="o">=</span>public_html
+<span class="nv">GIT_REPOSITORY</span><span class="o">=</span>git@github.com:timacdonald/website.git
+<span class="nv">REPOSITORY_PUBLIC_DIRECTORY_PATH</span><span class="o">=</span>public_html
+
+<span class="nv">UNIX_TIME</span><span class="o">=</span><span class="k">$(</span>date +%s<span class="k">)</span>
+<span class="nv">DEPLOYMENT_DIRECTORY</span><span class="o">=</span>./flipit/deploys/<span class="nv">$UNIX_TIME</span>
+
+mkdir -p <span class="nv">$DEPLOYMENT_DIRECTORY</span>
+git clone <span class="nv">$GIT_REPOSITORY</span> <span class="nv">$DEPLOYMENT_DIRECTORY</span>
+ln -s -n -f <span class="nv">$DEPLOYMENT_DIRECTORY</span>/<span class="nv">$REPOSITORY_PUBLIC_DIRECTORY_PATH</span> <span class="nv">$SERVER_PUBLIC_DIRECTORY_PATH</span>
+</code></pre>
+</div>
+
+<h2 id="converting-commands-to-a-script-we-can-run">Converting Commands To A Script We Can Run</h2>
+
+<p>You don’t want to have to remember all this and type it everytime, plus have to change the variables for every server you own, so instead, let’s make this into a script you can call and run from your local machine to FlipIt™ on your remote server, providing the directories and url as arguements.</p>
+
+<h3 id="making-and-running-a-script-file">Making and Running a Script File</h3>
+
+<p>To create a script file we could use a text-editor, but while we are doing commands, let’s use the terminal to do it. First we need to create a file, but we will also need to allow the file to be executed.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># Create a file called 'flipit.sh'.
+touch flipit.sh
+
+# Change the permissions of the file to make it executable.
+chmod +x flipit.sh
+</code></pre>
+</div>
+
+<p>Now you can open the <code class="highlighter-rouge">flipit.sh</code> file in your text-editor of choice and fill it out as we go.</p>
+
+<h3 id="adding-arguments">Adding Arguments</h3>
+
+<p>Shell scripts allow you to provide flags like <code class="highlighter-rouge">-p</code>, as you’ve seen above, but also arguments. As a example, say we want to call a script that does some kind of logging in, and we can provide a username and password, it might look something like this, where my username (<code class="highlighter-rouge">-u</code>) is <code class="highlighter-rouge">tim</code> and my password (<code class="highlighter-rouge">-p</code>) is <code class="highlighter-rouge">password1</code>:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>./login.sh -u tim -p password1
+</code></pre>
+</div>
+
+<p>As we are going to provide our url and directories as arguments when we call the script, we need to add a little bit of extra code to our script, that I found online. Being new to scripting and the syntax, I get what this new block is doing but it’s a copy and paste job…it loops through the provided arguments and allows you to use the values provided by the user. In our case, we are just going to set our <code class="highlighter-rouge">SERVER_PUBLIC_DIRECTORY_PATH</code>, <code class="highlighter-rouge">GIT_REPOSITORY</code> and <code class="highlighter-rouge">REPOSITORY_PUBLIC_DIRECTORY_PATH</code> variables in this loop.</p>
+
+<p>So let’s move our variable creation into our loop that detects the provided arguments. Becuase we are going to save this script as a file, we will also need to tell the system what type of script it is by adding <code class="highlighter-rouge"><span class="c">#!/bin/sh</span></code> at the top of the script file so that the system knows how to interpret the commands, just like our HTML <code class="highlighter-rouge">&lt;!doctype html&gt;</code> at the beginning of a HTML file tell the browser how to interpret the HTML it’s about to parse.</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+<span class="k">while </span><span class="nb">getopts </span>r:g:s: option
+<span class="k">do
+    case</span> <span class="s2">"</span><span class="k">${</span><span class="nv">option</span><span class="k">}</span><span class="s2">"</span>
+    <span class="k">in
+        </span>r<span class="p">)</span> <span class="nv">GIT_REPOSITORY</span><span class="o">=</span><span class="k">${</span><span class="nv">OPTARG</span><span class="k">}</span><span class="p">;;</span>
+        g<span class="p">)</span> <span class="nv">REPOSITORY_PUBLIC_DIRECTORY_PATH</span><span class="o">=</span><span class="k">${</span><span class="nv">OPTARG</span><span class="k">}</span><span class="p">;;</span>
+        s<span class="p">)</span> <span class="nv">SERVER_PUBLIC_DIRECTORY_PATH</span><span class="o">=</span>./<span class="k">${</span><span class="nv">OPTARG</span><span class="k">}</span><span class="p">;;</span>
+    <span class="k">esac</span>
+<span class="k">done
+
+</span><span class="nv">UNIX_TIME</span><span class="o">=</span><span class="k">$(</span>date +%s<span class="k">)</span>
+<span class="nv">DEPLOYMENT_DIRECTORY</span><span class="o">=</span>./flipit/deploys/<span class="nv">$UNIX_TIME</span>
+
+mkdir -p <span class="nv">$DEPLOYMENT_DIRECTORY</span>
+git clone <span class="nv">$GIT_REPOSITORY</span> <span class="nv">$DEPLOYMENT_DIRECTORY</span>
+ln -s -n -f <span class="nv">$DEPLOYMENT_DIRECTORY</span>/<span class="nv">$REPOSITORY_PUBLIC_DIRECTORY_PATH</span> <span class="nv">$SERVER_PUBLIC_DIRECTORY_PATH</span>
+</code></pre>
+</div>
+
+<p>Once this is in place, these values can be provided by calling:</p>
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c"># Exectue FlipIt™.</span>
+<span class="c"># The -s argument provides the servers public directory.</span>
+<span class="c"># The -r argument provides the repository url.</span>
+<span class="c"># The -g argument provides the git repository public directory...I know it's terrible naming.</span>
+./flipit.sh -s public_html -r git@github.com:timacdonald/website.git -g public_html
+</code></pre>
+</div>
+
+<h2 id="calling-the-script-locally-but-executing-on-a-remote-server">Calling The Script Locally, But Executing On A Remote Server</h2>
+
+<p>The last piece of my puzzle was to be able call the script on my local development machine, but have it login to the remote web server and execute the script on a remote server. Because I have my development and web server matched up with SSH keys, I can easily SSH in and run these commands, but now I want the script to SSH into my server and execute the script automatically.</p>
+
+<p>Just to reiterate, learning about SSH’ing into servers has been a very helpful skill. I’ve <a href="http://nerderati.com/2011/03/17/simplify-your-life-with-an-ssh-config-file/">added my server to my <code class="highlighter-rouge">.ssh/config</code> file</a> so I can call <code class="highlighter-rouge">ssh timacdonald</code> to SSH into my web server without having to provide the login details each time.</p>
+
+<p>So now I just need to be able to get my script to SSH in and run the script. Luckily for us, we can save the script as a string and pass it as an argument to the <code class="highlighter-rouge">ssh</code> command. Let’s see what that would look like:</p>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+<span class="k">while </span><span class="nb">getopts </span>r:g:s: option
+<span class="k">do
+    case</span> <span class="s2">"</span><span class="k">${</span><span class="nv">option</span><span class="k">}</span><span class="s2">"</span>
+    <span class="k">in
+        </span>r<span class="p">)</span> <span class="nv">GIT_REPOSITORY</span><span class="o">=</span><span class="k">${</span><span class="nv">OPTARG</span><span class="k">}</span><span class="p">;;</span>
+        g<span class="p">)</span> <span class="nv">REPOSITORY_PUBLIC_DIRECTORY_PATH</span><span class="o">=</span><span class="k">${</span><span class="nv">OPTARG</span><span class="k">}</span><span class="p">;;</span>
+        s<span class="p">)</span> <span class="nv">SERVER_PUBLIC_DIRECTORY_PATH</span><span class="o">=</span>./<span class="k">${</span><span class="nv">OPTARG</span><span class="k">}</span><span class="p">;;</span>
+    <span class="k">esac</span>
+<span class="k">done
+
+</span><span class="nv">UNIX_TIME</span><span class="o">=</span><span class="k">$(</span>date +%s<span class="k">)</span>
+<span class="nv">DEPLOYMENT_DIRECTORY</span><span class="o">=</span>./flipit/deploys/<span class="nv">$UNIX_TIME</span>
+
+<span class="c"># Create our server script variable.</span>
+<span class="c"># You'll notice the script is wrapped in double quotes (").</span>
+<span class="c"># Make sure to escape any double quotes (\") in the script.</span>
+<span class="nv">SERVER_SCRIPT</span><span class="o">=</span><span class="s2">"
+mkdir -p </span><span class="nv">$DEPLOYMENT_DIRECTORY</span><span class="s2">
+git clone </span><span class="nv">$GIT_REPOSITORY</span><span class="s2"> </span><span class="nv">$DEPLOYMENT_DIRECTORY</span><span class="s2">
+ln -s -n -f </span><span class="nv">$DEPLOYMENT_DIRECTORY</span><span class="s2">/</span><span class="nv">$REPOSITORY_PUBLIC_DIRECTORY_PATH</span><span class="s2"> </span><span class="nv">$SERVER_PUBLIC_DIRECTORY_PATH</span><span class="s2">"</span>
+
+<span class="c"># SSH into the server</span>
+<span class="c"># The -t flag will mean that the scripts output will be returned to our console</span>
+<span class="c">#   so we can see if it was successful, otherwise we don't get the console output.</span>
+<span class="c"># The server script provided will be executed</span>
+ssh timacdonald -t <span class="nv">$SERVER_SCRIPT</span>
+</code></pre>
+</div>
+
+<p>Of course, you will probably want to make this an argument the user can provide also so that it is not harcoded into the script.</p>
+
+<p>And that’s a wrap on my goal - <em>Nailed It</em>! This is really just an exercise for me to wrap my head around shell scripting and the basics of how it comes together, but I’m really happy with the outcome. Now I can run the script and have my site updated to the latest commit with zero downtime, and if you’re reading this post - it WORKED 💪.</p>
+
+<h2 id="whats-next">Whats Next</h2>
+
+<ul>
+  <li>I’d like to add a rewind option to flip back to the previous deploy incase something goes wrong.</li>
+  <li>Having an <code class="highlighter-rouge">init</code> option for FlipIt™ that stores the repository and folder variables in a config file so that after the initial <code class="highlighter-rouge">init</code> command is called, you no longer need to provide the folder and url arguments.</li>
+</ul>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+  <li>This is working for my setup, but different servers might have different setups and the code may not execute as expected. I’m running these commands on my development Mac.</li>
+  <li>The script does not currently clean up after itself i.e. after many deploys you may start to fill up your web server. For now you will want to manually clear out old deploys from the deploy directory. In the future I might add a cleanup script to remove the older deploys…or you could just use <a href="https://envoyer.io">Envoyer</a>.</li>
+  <li>I’ve just worked this out through trial and error. Dig into shell scripting, it’s a different world and good fun experimenting with - makes you feel like a programming guru at the cafe as well 🤓.</li>
+  <li>If you are running something like Laravel and wish to run any additional command, such as <code class="highlighter-rouge">composer</code>, <code class="highlighter-rouge">artisan</code> or <code class="highlighter-rouge">npm</code> commands, you can slot them in before the symbolic link is made, but make sure it’s not AFTER the link is made, otherwise our Zero Downtime is gone e.g.</li>
+</ul>
+
+<div class="language-sh highlighter-rouge"><pre class="highlight"><code>...
+
+git clone <span class="nv">$GIT_REPOSITORY</span> <span class="nv">$DEPLOYMENT_DIRECTORY</span>
+
+<span class="c"># Run composer install in the deployment directory before link is flipped</span>
+composer --working-dir<span class="o">=</span><span class="nv">$DEPLOYMENT_DIRECTORY</span> install
+
+ln -s -n -f <span class="nv">$DEPLOYMENT_DIRECTORY</span>/<span class="nv">$REPOSITORY_PUBLIC_DIRECTORY_PATH</span> <span class="nv">$SERVER_PUBLIC_DIRECTORY_PATH</span><span class="s2">"
+
+...
+</span></code></pre>
+</div>
+
+<p>We’ll you made it this far, so it you’d like to discuss anything about the article, or criticize my lack of knowledge, please feel free to hit me up on <a href="https://twitter.com/timacdonald87">Twitter</a>.</p>
+
+<h2 id="links">Links</h2>
+
+<ul>
+  <li><a href="https://github.com/timacdonald/flipit">GitHub Respository</a> - Please feel free to contribute and make it better!</li>
+</ul>
+
+    </div>
+</article>
+<aside class="profile section" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="alternateName" content="TiMacDonald">
+    <meta itemprop="sameAs" content="https://twitter.com/timacdonald87">
+    <div class="width-container">
+        <p>
+            <a class="dont-print-url" href="https://timacdonald.me">
+                <img src="/assets/img/profile.png" class="img" alt="profile image" draggable="false" height="100" width="100" itemprop="image">
+            </a>
+            <a class="name dont-print-url" href="https://timacdonald.me" itemprop="url">
+                <span itemprop="name">Tim MacDonald</span>
+            </a>
+        </p>
+        <p itemprop="description">Software developer, musican and native plant enthusiast.</p>
+    </div>
+</aside>
+        <footer class="dont-print">
+            <nav>
+                <ul>
+                    <li>
+                        <a href="https://timacdonald.me/">Home</a>
+                    </li>
+                    <li>
+                        <a href="https://timacdonald.me/about/">About</a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/timacdonald87">Twitter</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/timacdonald">GitHub</a>
+                    </li>
+                    <li>
+                        <a href="https://au.linkedin.com/in/timacdonaldau">LinkedIn</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="hosting-referral">
+                Proudly hosted with <a href="http://www.panthur.com.au/members/aff.php?aff=318">Panthur</a>.
+            </div>
+        </footer>
+        <script src="/assets/js/app.js"></script>
+    </body>
+</html>

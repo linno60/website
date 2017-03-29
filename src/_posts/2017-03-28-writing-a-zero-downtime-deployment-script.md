@@ -219,7 +219,7 @@ DEPLOYMENT_DIRECTORY=./flipit/deploys/$UNIX_TIME
 # The -tt flag will mean that the scripts output will be returned to our console
 #   so we can see if it was successful, otherwise we don't get the console output.
 # The script provided in the heredoc will be executed on the remote server
-ssh timacdonald -tt <<REMOTE_SCRIPT
+ssh -tt timacdonald <<REMOTE_SCRIPT
 mkdir -p $DEPLOYMENT_DIRECTORY
 git clone $GIT_REPOSITORY $DEPLOYMENT_DIRECTORY
 ln -s -n -f $DEPLOYMENT_DIRECTORY/$REPOSITORY_PUBLIC_DIRECTORY_PATH $SERVER_PUBLIC_DIRECTORY_PATH

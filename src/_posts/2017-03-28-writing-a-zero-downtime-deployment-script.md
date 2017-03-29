@@ -198,7 +198,7 @@ The last piece of my puzzle was to be able call the script on my local developme
 
 Just to reiterate, learning about SSH'ing into servers has been a very helpful skill. I've [added my server to my `.ssh/config` file](http://nerderati.com/2011/03/17/simplify-your-life-with-an-ssh-config-file/) so I can call `ssh timacdonald` to SSH into my web server without having to provide the login details each time.
 
-So now I just need to be able to get my script to SSH in and run the script. Luckily for us, we can save the script as a string and pass it as an argument to the `ssh` command. Let's see what that would look like:
+So now I just need to be able to get my script to SSH in and run the script. Luckily for us, we can pass the script as a string and pass it as an argument to the `ssh` command. To do this we'll wrap the script to run in a [heredoc](https://en.wikipedia.org/wiki/Here_document#Unix_shells). Let's see what that would look like:
 
 ```sh
 #!/bin/sh
@@ -215,22 +215,22 @@ done
 UNIX_TIME=$(date +%s)
 DEPLOYMENT_DIRECTORY=./flipit/deploys/$UNIX_TIME
 
-# Create our server script variable.
-# You'll notice the script is wrapped in double quotes (").
-# Make sure to escape any double quotes (\") in the script.
-SERVER_SCRIPT="
+# SSH into the server and run script.
+# The -tt flag will mean that the scripts output will be returned to our console
+#   so we can see if it was successful, otherwise we don't get the console output.
+# The script provided in the heredoc will be executed on the remote server
+ssh timacdonald -tt <<REMOTE_SCRIPT
 mkdir -p $DEPLOYMENT_DIRECTORY
 git clone $GIT_REPOSITORY $DEPLOYMENT_DIRECTORY
-ln -s -n -f $DEPLOYMENT_DIRECTORY/$REPOSITORY_PUBLIC_DIRECTORY_PATH $SERVER_PUBLIC_DIRECTORY_PATH"
+ln -s -n -f $DEPLOYMENT_DIRECTORY/$REPOSITORY_PUBLIC_DIRECTORY_PATH $SERVER_PUBLIC_DIRECTORY_PATH
 
-# SSH into the server
-# The -t flag will mean that the scripts output will be returned to our console
-#   so we can see if it was successful, otherwise we don't get the console output.
-# The server script provided will be executed
-ssh timacdonald -t $SERVER_SCRIPT
+# Close the connection
+exit
+
+REMOTE_SCRIPT
 ```
 
-Of course, you will probably want to make this an argument the user can provide also so that it is not harcoded into the script.
+Of course, you will probably want to make the host an argument the user can provide also so that it is not harcoded into the script.
 
 And that's a wrap on my goal - *Nailed It*! This is really just an exercise for me to wrap my head around shell scripting and the basics of how it comes together, but I'm really happy with the outcome. Now I can run the script and have my site updated to the latest commit with zero downtime, and if you're reading this post - it WORKED 💪.
 

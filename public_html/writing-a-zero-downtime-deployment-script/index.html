@@ -228,7 +228,7 @@ ln -s -n -f <span class="nv">$DEPLOYMENT_DIRECTORY</span>/<span class="nv">$REPO
 
 <p>Just to reiterate, learning about SSH’ing into servers has been a very helpful skill. I’ve <a href="http://nerderati.com/2011/03/17/simplify-your-life-with-an-ssh-config-file/">added my server to my <code class="highlighter-rouge">.ssh/config</code> file</a> so I can call <code class="highlighter-rouge">ssh timacdonald</code> to SSH into my web server without having to provide the login details each time.</p>
 
-<p>So now I just need to be able to get my script to SSH in and run the script. Luckily for us, we can save the script as a string and pass it as an argument to the <code class="highlighter-rouge">ssh</code> command. Let’s see what that would look like:</p>
+<p>So now I just need to be able to get my script to SSH in and run the script. Luckily for us, we can pass the script as a string and pass it as an argument to the <code class="highlighter-rouge">ssh</code> command. To do this we’ll wrap the script to run in a <a href="https://en.wikipedia.org/wiki/Here_document#Unix_shells">heredoc</a>. Let’s see what that would look like:</p>
 
 <div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
 <span class="k">while </span><span class="nb">getopts </span>r:g:s: option
@@ -244,23 +244,23 @@ ln -s -n -f <span class="nv">$DEPLOYMENT_DIRECTORY</span>/<span class="nv">$REPO
 </span><span class="nv">UNIX_TIME</span><span class="o">=</span><span class="k">$(</span>date +%s<span class="k">)</span>
 <span class="nv">DEPLOYMENT_DIRECTORY</span><span class="o">=</span>./flipit/deploys/<span class="nv">$UNIX_TIME</span>
 
-<span class="c"># Create our server script variable.</span>
-<span class="c"># You'll notice the script is wrapped in double quotes (").</span>
-<span class="c"># Make sure to escape any double quotes (\") in the script.</span>
-<span class="nv">SERVER_SCRIPT</span><span class="o">=</span><span class="s2">"
-mkdir -p </span><span class="nv">$DEPLOYMENT_DIRECTORY</span><span class="s2">
-git clone </span><span class="nv">$GIT_REPOSITORY</span><span class="s2"> </span><span class="nv">$DEPLOYMENT_DIRECTORY</span><span class="s2">
-ln -s -n -f </span><span class="nv">$DEPLOYMENT_DIRECTORY</span><span class="s2">/</span><span class="nv">$REPOSITORY_PUBLIC_DIRECTORY_PATH</span><span class="s2"> </span><span class="nv">$SERVER_PUBLIC_DIRECTORY_PATH</span><span class="s2">"</span>
-
-<span class="c"># SSH into the server</span>
-<span class="c"># The -t flag will mean that the scripts output will be returned to our console</span>
+<span class="c"># SSH into the server and run script.</span>
+<span class="c"># The -tt flag will mean that the scripts output will be returned to our console</span>
 <span class="c">#   so we can see if it was successful, otherwise we don't get the console output.</span>
-<span class="c"># The server script provided will be executed</span>
-ssh timacdonald -t <span class="nv">$SERVER_SCRIPT</span>
-</code></pre>
+<span class="c"># The script provided in the heredoc will be executed on the remote server</span>
+ssh timacdonald -tt <span class="sh">&lt;&lt;REMOTE_SCRIPT
+mkdir -p $DEPLOYMENT_DIRECTORY
+git clone $GIT_REPOSITORY $DEPLOYMENT_DIRECTORY
+ln -s -n -f $DEPLOYMENT_DIRECTORY/$REPOSITORY_PUBLIC_DIRECTORY_PATH $SERVER_PUBLIC_DIRECTORY_PATH
+
+# Close the connection
+exit
+
+REMOTE_SCRIPT
+</span></code></pre>
 </div>
 
-<p>Of course, you will probably want to make this an argument the user can provide also so that it is not harcoded into the script.</p>
+<p>Of course, you will probably want to make the host an argument the user can provide also so that it is not harcoded into the script.</p>
 
 <p>And that’s a wrap on my goal - <em>Nailed It</em>! This is really just an exercise for me to wrap my head around shell scripting and the basics of how it comes together, but I’m really happy with the outcome. Now I can run the script and have my site updated to the latest commit with zero downtime, and if you’re reading this post - it WORKED 💪.</p>
 

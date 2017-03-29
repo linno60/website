@@ -234,7 +234,7 @@ Of course, you will probably want to make the host an argument the user can prov
 
 And that's a wrap on my goal - *Nailed It*! This is really just an exercise for me to wrap my head around shell scripting and the basics of how it comes together, but I'm really happy with the outcome. Now I can run the script and have my site updated to the latest commit with zero downtime, and if you're reading this post - it WORKED 💪.
 
-## Whats Next
+## What's Next
 
 - I'd like to add a rewind option to flip back to the previous deploy incase something goes wrong.
 - Having an `init` option for FlipIt™ that stores the repository and folder variables in a config file so that after the initial `init` command is called, you no longer need to provide the folder and url arguments.

@@ -15,7 +15,8 @@
 # in the templates via {{ site.myvariable }}.
 title: Tim MacDonald
 sub_title: PHP, Laravel, and Mobile App Developer
-description: I'm a local software developer located in Wagga Wagga, Australia specialising in PHP / Laravel web apps, but also takle Android and iOS apps when possible.
+site_description: I'm a local software developer located in Wagga Wagga, Australia specialising in PHP / Laravel web apps, but also takle Android and iOS apps when possible.
+description: Software developer, musican and native plant enthusiast.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://timacdonald.me" # the base hostname & protocol for your site, e.g. http://example.com
 permalink: /:title/

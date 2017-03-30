@@ -265,3 +265,13 @@ We'll you made it this far, so it you'd like to discuss anything about the artic
 ## Links
 
 - [GitHub Respository](https://github.com/timacdonald/flipit) - Please feel free to contribute and make it better!
+
+- - -
+
+## Updates
+
+The always awesome [Matt Stauffer](https://twitter.com/stauffermatt) added a [great tip](https://twitter.com/stauffermatt/status/847564955729534976) to this. When cloning the respository, add a *depth of 1* i.e.
+```
+git clone --depth 1 $GIT_REPOSITORY $DEPLOYMENT_DIRECTORY
+```
+This will ensure that only the latest version of the files is downloaded, instead of including every revision of every file in the respositories history. Thanks Matt!

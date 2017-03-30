@@ -302,6 +302,16 @@ ln -s -n -f <span class="nv">$DEPLOYMENT_DIRECTORY</span>/<span class="nv">$REPO
   <li><a href="https://github.com/timacdonald/flipit">GitHub Respository</a> - Please feel free to contribute and make it better!</li>
 </ul>
 
+<hr />
+
+<h2 id="updates">Updates</h2>
+
+<p>The always awesome <a href="https://twitter.com/stauffermatt">Matt Stauffer</a> added a <a href="https://twitter.com/stauffermatt/status/847564955729534976">great tip</a> to this. When cloning the respository, add a <em>depth of 1</em> i.e.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>git clone --depth 1 $GIT_REPOSITORY $DEPLOYMENT_DIRECTORY
+</code></pre>
+</div>
+<p>This will ensure that only the latest version of the files is downloaded, instead of including every revision of every file in the respositories history. Thanks Matt!</p>
+
     </div>
 </article>
 <aside class="profile section" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -343,6 +353,6 @@ ln -s -n -f <span class="nv">$DEPLOYMENT_DIRECTORY</span>/<span class="nv">$REPO
                 Proudly hosted with <a href="http://www.panthur.com.au/members/aff.php?aff=318">Panthur</a>.
             </div>
         </footer>
-        <script src="/assets/js/app.js"></script>
+        <script src="/assets/js/app.290327.js"></script>
     </body>
 </html>

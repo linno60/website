@@ -48,6 +48,6 @@
                 Proudly hosted with <a href="http://www.panthur.com.au/members/aff.php?aff=318">Panthur</a>.
             </div>
         </footer>
-        <script src="/assets/js/app{% if jekyll.environment == "local"%}.{{ site.asset_version }}{% endif %}.js"></script>
+        <script src="/assets/js/app{% if jekyll.environment != "local"%}.{{ site.asset_version }}{% endif %}.js"></script>
     </body>
 </html>

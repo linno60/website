@@ -135,7 +135,7 @@ ln -s -n -f $DEPLOYMENT_DIRECTORY/$REPOSITORY_PUBLIC_DIRECTORY_PATH $SERVER_PUBL
 
 ## Converting Commands To A Script We Can Run
 
-You don't want to have to remember all this and type it everytime, plus have to change the variables for every server you own, so instead, let's make this into a script you can call and run from your local machine to FlipIt™ on your remote server, providing the directories and url as arguements.
+You don't want to have to remember all this and type it everytime, plus have to change the variables for every server you own, so instead, let's make this into a script you can call and run from your local machine to FlipIt™ on your remote server, providing the directories and url as arguments.
 
 ### Making and Running a Script File
 
